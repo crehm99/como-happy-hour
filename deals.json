@@ -42,6 +42,7 @@
             "days": [5],    
             "tags": ["cocktails", "patio", "food"],
             "mapLink": "https://www.google.com/maps/search/?api=1&query=Irenes+Columbia+MO&query_place_id=ChIJnyGSq_O33IcRr9BOvPfN7RE"
+            
         },
         { 
             "name": "Pizza Tree", 

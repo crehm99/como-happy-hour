@@ -35,8 +35,23 @@ function formatTime(val) {
     } else {
         ampm = "AM";
     }
-
     return `${hour}:${minutes} ${ampm}`;
+}
+
+// --- 3. HELPER: SHARING LOGIC ---
+async function shareDeal(name, deal) {
+    const shareData = {
+        title: 'CoMo Happy Hour',
+        text: `Check out this deal at ${name}: ${deal}!`,
+        url: window.location.href
+    };
+
+    try {
+        await navigator.share(shareData);
+    } catch (err) {
+        navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        alert('Link copied to clipboard!');
+    }
 }
 
 function getTagsHTML(tags) {
@@ -44,7 +59,7 @@ function getTagsHTML(tags) {
     return `<div class="tag-container">${tags.map(tag => `<span class="tag-badge">${tag}</span>`).join('')}</div>`;
 }
 
-// --- 3. THE CORE ENGINE ---
+// --- 4. THE CORE ENGINE ---
 function updateApp() {
     const listContainer = document.getElementById('happy-hour-list');
     const directoryContainer = document.getElementById('full-directory');
@@ -68,22 +83,13 @@ function updateApp() {
         return matchesSearch && matchesTag;
     });
 
-    // --- HAPPENING NOW (Updated for Overnight Logic) ---
+    // --- HAPPENING NOW ---
     const activeDeals = filteredDeals.filter(item => {
         if (!item.days.includes(currentDay)) return false;
-
         const s = item.start;
         const e = item.end === 0 ? 24 : item.end;
         const nowTime = currentHourDecimal;
-
-        if (e > s) {
-            // Normal deal: e.g., 4 PM to 7 PM
-            return nowTime >= s && nowTime < e;
-        } else {
-            // Overnight deal: e.g., 8 PM to 2 AM
-            // It's "Now" if it's after 8 PM OR before 2 AM
-            return nowTime >= s || nowTime < e;
-        }
+        return (e > s) ? (nowTime >= s && nowTime < e) : (nowTime >= s || nowTime < e);
     });
 
     if (listContainer) {
@@ -92,9 +98,12 @@ function updateApp() {
                 <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
                 <p>${item.deal}</p>
                 ${getTagsHTML(item.tags)}
-                <span class="time-badge">Until ${formatTime(item.end)}</span>
+                <div class="card-footer">
+                    <span class="time-badge">Until ${formatTime(item.end)}</span>
+                    <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
+                </div>
             </div>
-        `).join('') : `<p style="text-align:center; color:#888; padding: 20px;">No matching deals active right now.</p>`;
+        `).join('') : `<p style="text-align:center; color:#888; padding: 20px;">No matching deals active now.</p>`;
     }
 
     // --- LATER TODAY ---
@@ -111,7 +120,10 @@ function updateApp() {
                     <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
                     <p>${item.deal}</p>
                     ${getTagsHTML(item.tags)}
-                    <span class="time-badge gray">${formatTime(item.start)} - ${formatTime(item.end)}</span>
+                    <div class="card-footer">
+                        <span class="time-badge gray">${formatTime(item.start)} - ${formatTime(item.end)}</span>
+                        <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
+                    </div>
                 </div>
             `).join('')}
         ` : "";
@@ -134,6 +146,7 @@ function updateApp() {
                                 <div class="directory-name"><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></div>
                                 <div class="directory-details">${item.deal}</div>
                                 ${getTagsHTML(item.tags)}
+                                <button class="share-btn mini" data-name="${item.name}" data-deal="${item.deal}">Share Deal</button>
                             </div>
                             <div class="directory-time">${formatTime(item.start)} - ${formatTime(item.end)}</div>
                         </div>
@@ -142,7 +155,6 @@ function updateApp() {
             });
         } else {
             const sortedBars = [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name));
-            directoryHTML += `<div style="margin-top: 20px;"></div>`;
             directoryHTML += sortedBars.map(item => {
                 const daysLabel = item.days.map(d => dayNames[d].substring(0, 3)).join(', ');
                 return `
@@ -152,6 +164,7 @@ function updateApp() {
                             <div class="directory-details">${item.deal}</div>
                             ${getTagsHTML(item.tags)}
                             <div class="day-tags">Available: ${daysLabel}</div>
+                            <button class="share-btn mini" data-name="${item.name}" data-deal="${item.deal}">Share Deal</button>
                         </div>
                         <div class="directory-time">${formatTime(item.start)} - ${formatTime(item.end)}</div>
                     </div>
@@ -162,11 +175,21 @@ function updateApp() {
     }
 }
 
+// --- 5. INTERACTIVE LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
     const dayBtn = document.getElementById('view-by-day');
     const barBtn = document.getElementById('view-by-bar');
     const searchInput = document.getElementById('directory-search');
     const tagBtns = document.querySelectorAll('.filter-btn');
+
+    // Handle Share Clicks Globally (Supports Apostrophes!)
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.classList.contains('share-btn')) {
+            const name = e.target.getAttribute('data-name');
+            const deal = e.target.getAttribute('data-deal');
+            shareDeal(name, deal);
+        }
+    });
 
     if (dayBtn && barBtn) {
         dayBtn.addEventListener('click', () => { currentView = 'day'; dayBtn.classList.add('active'); barBtn.classList.remove('active'); updateApp(); });

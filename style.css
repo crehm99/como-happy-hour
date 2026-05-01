@@ -159,6 +159,26 @@ main {
     margin-bottom: 10px;
 }
 
+.share-btn {
+    background: transparent;
+    border: 1px solid #F1B82D;
+    color: #F1B82D;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    margin-top: 10px;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.share-btn:hover {
+    background: #F1B82D;
+    color: #000;
+}
+
 .filter-btn {
     background: transparent;
     color: #F1B82D;
