@@ -19,7 +19,7 @@
             "mapLink": "https://maps.app.goo.gl/5xhR1g24ehYFcQ9t6"
         },        
           {
-             "name": "Highball Kitchen & Cocktails ",
+             "name": "Highball Kitchen & Cocktails",
              "deal": "$2 High Life & Busch Light, $6 Dips, $8 Cosmos & Old Fashioneds, $8 Hugo & Aperol Spritz, $10 Duck Fat Smash & Side",
             "start": 16, "end": 18,
             "days": [0,2,3,4,5],
@@ -28,7 +28,7 @@
         }, 
 
           {
-             "name": "Highball Kitchen & Cocktails ",
+             "name": "Highball Kitchen & Cocktails",
              "deal": "After Dark Deals: $3 High Life & Busch Light, $4 Wells, $5 Mules, $6 Dips, $6 5 Cheese Frites",
             "start": 22, "end": 1.5,
             "days": [0,2,3,4,5],
@@ -37,7 +37,7 @@
         },       
 
           {
-             "name": "Highball Kitchen & Cocktails ",
+             "name": "Highball Kitchen & Cocktails",
              "deal": "Wine Wednesdays: $4 Glasses of Wine, $12 Charcuterie Boards, $30 Bottle and Board",
             "start": 16, "end": 1.5,
             "days": [3],
@@ -45,18 +45,18 @@
             "mapLink": "https://maps.app.goo.gl/Y8uETyMEVaaxWR5o8"
         },             
           {
-             "name": "Pappo's Pizzeria ",
+             "name": "Pappo's Pizzeria",
              "deal": "$3 Off Select Appetizers, $2 Off Well Liquors, $1 Off Draft & Domestic Beers! *Dine in Only ",
             "start": 15, "end": 18,
-            "days": [1,2,3.4.5],
+            "days": [1,2,3,4,5],
             "tags": ["beer", "food", "cocktails"],
             "mapLink": "https://maps.app.goo.gl/qksQAwctEqxwexNE6"
         },             
           {
-             "name": "Pappo's Pizzeria ",
+             "name": "Pappo's Pizzeria",
              "deal": "Lunch Special: Any Specialty Pizza, Calzone, PaPPo's Sub, 6 Wings, or Meatball App. With a lunch-size salad $12.99. *Dine in Only",
             "start": 11, "end": 14,
-            "days": [1,2,3.4.5],
+            "days": [1,2,3,4,5],
             "tags": ["food"],
             "mapLink": "https://maps.app.goo.gl/qksQAwctEqxwexNE6"
         }, 
@@ -64,7 +64,7 @@
             "name": "Sycamore", 
             "deal": "Cocktail: Pepper Queen $6.5, Beer: Broadway Brewery Bonne Femme $3, Wine: 1/2 off Glasses, Food: Pomme Frites $5, House Salad $5, Flatbread $6.5", 
             "start": 15, "end": 18, 
-            "days": [1,2,3, 4, 5, 6],
+            "days": [1,2,3,4,5,6],
             "mapLink": "https://maps.app.goo.gl/BteK3hgMbGTRR9W88",
             "tags": ["food","cocktails","beer"]
         }    
