@@ -18,7 +18,17 @@
             "tags": ["beer", "wine", "food"],
             "mapLink": "https://maps.app.goo.gl/5xhR1g24ehYFcQ9t6"
         },        
-          {
+
+         {
+             "name": "Flat Branch Pub & Brewing",
+             "deal": "$5.25 Imperial Pints, $5 wine and well drinks, specialty apps"
+            "start": 16, "end": 18,
+            "days": [1,2,3,4],
+            "tags": ["beer", "wine", "food", "cocktails", "patio"],
+            "mapLink": "https://maps.app.goo.gl/MgNSxc45pDwt4pau5"
+        }, 
+          
+        {
              "name": "Highball Kitchen & Cocktails",
              "deal": "$2 High Life & Busch Light, $6 Dips, $8 Cosmos & Old Fashioneds, $8 Hugo & Aperol Spritz, $10 Duck Fat Smash & Side",
             "start": 16, "end": 18,
