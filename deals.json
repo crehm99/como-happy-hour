@@ -59,6 +59,23 @@
             "start": 15, "end": 17, 
             "days": [1, 2, 3, 4] 
         },
+        {
+             "name": "Addison's Downtown",
+             "deal": "Beer: Craft beer $4, Wine: $2 off glasses, Food: Nachos $8",
+            "start": 20, "end": 22,
+            "days": [1,2,3,4,5],
+            "tags": ["beer", "wine", "food"],
+            "mapLink": "https://maps.app.goo.gl/usHrDfzGwAmG8PCH6"
+        },  
+
+          {
+             "name": "Addison's South",
+             "deal": "Beer: Craft beer $4, Wine: $2 off glasses, Food: Nachos $8",
+            "start": 20, "end": 22,
+            "days": [1,2,3,4,5],
+            "tags": ["beer", "wine", "food"],
+            "mapLink": "https://maps.app.goo.gl/5xhR1g24ehYFcQ9t6"
+        },        
 
         { 
             "name": "The Roof", 
