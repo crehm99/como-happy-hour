@@ -24,7 +24,7 @@
              "deal": "$2 High Life & Busch Light, $6 Dips, $8 Cosmos & Old Fashioneds, $8 Hugo & Aperol Spritz, $10 Duck Fat Smash & Side",
             "start": 16, "end": 18,
             "days": [0,2,3,4,5,6],
-            "tags": ["beer", "cocktails", "food"],
+            "tags": ["beer", "cocktails", "food", "patio"],
             "mapLink": "https://maps.app.goo.gl/Y8uETyMEVaaxWR5o8"
         }, 
 
@@ -33,7 +33,7 @@
              "deal": "After Dark Deals: $3 High Life & Busch Light, $4 Wells, $5 Mules, $6 Dips, $6 5 Cheese Frites",
             "start": 22, "end": 1.5,
             "days": [0,2,3,4,5,6],
-            "tags": ["beer", "cocktails", "food"],
+            "tags": ["beer", "cocktails", "food", "patio"],
             "mapLink": "https://maps.app.goo.gl/Y8uETyMEVaaxWR5o8"
         },       
 
@@ -42,7 +42,7 @@
              "deal": "Wine Wednesdays: $4 Glasses of Wine, $12 Charcuterie Boards, $30 Bottle and Board",
             "start": 16, "end": 1.5,
             "days": [3],
-            "tags": ["wine", "food"],
+            "tags": ["wine", "food", "patio"],
             "mapLink": "https://maps.app.goo.gl/Y8uETyMEVaaxWR5o8"
         },  
           {
@@ -59,7 +59,7 @@
              "deal": "$3 Off Select Appetizers, $2 Off Well Liquors, $1 Off Draft & Domestic Beers! *Dine in Only ",
             "start": 15, "end": 18,
             "days": [1,2,3,4,5],
-            "tags": ["beer", "food", "cocktails"],
+            "tags": ["beer", "food", "cocktails","patio"],
             "mapLink": "https://maps.app.goo.gl/qksQAwctEqxwexNE6"
         },             
 
@@ -68,7 +68,7 @@
              "deal": "Happy Hour: $1 off call cocktails, import/craft/draft beers, $2 off select wines by the glass, $3 off our popular sharing plates",
             "start": 14, "end": 18,
             "days": [1,2,3,4,5],
-            "tags": ["beer", "food", "cocktails","patio"],
+            "tags": ["beer", "food", "cocktails", "patio"],
             "mapLink": "https://maps.app.goo.gl/nkEqWjsqLDeTwx3W9"
         },  
 
@@ -77,7 +77,7 @@
              "deal": "Late Night Happy Hour: $2 Fireball, $2.5 Domestic Bottles, $3 Rumplemintz, $4 Well Drinks",
             "start": 21, "end": 1.5,
             "days": [1,2,3,4,5,6],
-            "tags": ["beer", "food", "cocktails","patio"],
+            "tags": ["beer", "food", "cocktails", "patio"],
             "mapLink": "https://maps.app.goo.gl/nkEqWjsqLDeTwx3W9"
         },          
         
