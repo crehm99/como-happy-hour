@@ -55,8 +55,8 @@
         },  
           {
              "name": "The Kitchen Grill & Games",
-             "deal": "$4 select drafts, Half off shareables, $1 off specialty cocktails",
-            "start": 11, "end": 22,
+             "deal": "Happy Hour: $4 select drafts, Half off shareables, $1 off specialty cocktails",
+            "start": 16, "end": 18,
             "days": [1,2,3,4],
             "tags": ["beer", "food", "cocktails", "patio"],
             "mapLink": "https://maps.app.goo.gl/HsiBS2JPwJuu6XAa8"
