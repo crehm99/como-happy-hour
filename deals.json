@@ -71,14 +71,25 @@
             "tags": ["beer", "food", "cocktails"],
             "mapLink": "https://maps.app.goo.gl/qksQAwctEqxwexNE6"
         },             
-          {
-             "name": "Pappo's Pizzeria",
-             "deal": "Lunch Special: Any Specialty Pizza, Calzone, PaPPo's Sub, 6 Wings, or Meatball App. With a lunch-size salad $12.99. *Dine in Only",
-            "start": 11, "end": 14,
+
+        {
+             "name": "Room 38",
+             "deal": "Happy Hour: $1 off call cocktails, import/craft/draft beers, $2 off select wines by the glass, $3 off our popular sharing plates",
+            "start": 14, "end": 18,
             "days": [1,2,3,4,5],
-            "tags": ["food"],
-            "mapLink": "https://maps.app.goo.gl/qksQAwctEqxwexNE6"
-        }, 
+            "tags": ["beer", "food", "cocktails","patio"],
+            "mapLink": "https://maps.app.goo.gl/nkEqWjsqLDeTwx3W9"
+        },  
+
+        {
+             "name": "Room 38",
+             "deal": "Late Night Happy Hour: $2 Fireball, $2.5 Domestic Bottles, $3 Rumplemintz, $4 Well Drinks",
+            "start": 21, "end": 1.5,
+            "days": [1,2,3,4,5,6],
+            "tags": ["beer", "food", "cocktails","patio"],
+            "mapLink": "https://maps.app.goo.gl/nkEqWjsqLDeTwx3W9"
+        },          
+        
          { 
             "name": "Sycamore", 
             "deal": "Pepper Queen cocktail $6.5, Broadway Brewery Bonne Femme beer $3, 1/2 off glasses of wine, Half Off Apps: Pomme Frites $5, House Salad $5, Flatbread $6.5", 
