@@ -36,7 +36,7 @@
             "mapLink": "https://maps.app.goo.gl/Y8uETyMEVaaxWR5o8"
         },       
 
-                  {
+          {
              "name": "Highball Kitchen & Cocktails ",
              "deal": "Wine Wednesdays: $4 Glasses of Wine, $12 Charcuterie Boards, $30 Bottle and Board",
             "start": 16, "end": 1.5,
@@ -45,21 +45,6 @@
             "mapLink": "https://maps.app.goo.gl/Y8uETyMEVaaxWR5o8"
         },             
 
-
-        { 
-            "name": "The Roof", 
-            "deal": "Discounted Cocktails", 
-            "start": 22, "end": 24, 
-            "days": [3, 4, 5, 6],
-            "mapLink": "https://maps.app.goo.gl/454gPYoz7dscLnMj9"
-        
-        },
-         { 
-            "name": "Shiloh Bar & Grill", 
-            "deal": "$3 Domestic Draws", 
-            "start": 16, "end": 19, 
-            "days": [1, 2, 3, 4, 5] 
-        },
          { 
             "name": "Sycamore", 
             "deal": "Cocktail: Pepper Queen $6.5, Beer: Broadway Brewery Bonne Femme $3, Wine: 1/2 off Glasses, Food: Pomme Frites $5, House Salad $5, Flatbread $6.5", 
