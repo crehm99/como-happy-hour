@@ -9,7 +9,6 @@ async function loadDeals() {
         const data = await response.json();
         deals = data.deals; 
 
-        // Check if the URL has a specific bar shared (e.g., ?bar=Irene%27s)
         const urlParams = new URLSearchParams(window.location.search);
         const sharedBar = urlParams.get('bar');
         if (sharedBar) {
@@ -29,43 +28,34 @@ async function loadDeals() {
     }
 }
 
-// --- 2. HELPER: TIME FORMATTING ---
+// --- 2. HELPERS: TIME & SCROLLING ---
 function formatTime(val) {
     let hour = Math.floor(val);
     let minutes = (val % 1) === 0.5 ? "30" : "00";
     let ampm = "AM";
-
-    if (hour === 0 || hour === 24) {
-        hour = 12;
-        ampm = "AM";
-    } else if (hour === 12) {
-        ampm = "PM";
-    } else if (hour > 12) {
-        hour = hour - 12;
-        ampm = "PM";
-    } else {
-        ampm = "AM";
-    }
+    if (hour === 0 || hour === 24) { hour = 12; ampm = "AM"; }
+    else if (hour === 12) { ampm = "PM"; }
+    else if (hour > 12) { hour = hour - 12; ampm = "PM"; }
+    else { ampm = "AM"; }
     return `${hour}:${minutes} ${ampm}`;
 }
 
-// --- 3. HELPER: SHARING WITH DEEP LINKS ---
+function scrollToDay(dayId) {
+    const element = document.getElementById(`header-${dayId}`);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
 async function shareDeal(name, deal) {
-    // This creates a unique URL for the specific bar
     const shareUrl = `${window.location.origin}${window.location.pathname}?bar=${encodeURIComponent(name)}`;
-    
     const shareData = {
         title: 'CoMo Happy Hour',
         text: `Check out this deal at ${name}: ${deal}!`,
         url: shareUrl
     };
-
-    try {
-        await navigator.share(shareData);
-    } catch (err) {
-        navigator.clipboard.writeText(`${shareData.text} ${shareUrl}`);
-        alert('Link copied to clipboard!');
-    }
+    try { await navigator.share(shareData); }
+    catch (err) { navigator.clipboard.writeText(`${shareData.text} ${shareUrl}`); alert('Link copied!'); }
 }
 
 function getTagsHTML(tags) {
@@ -73,13 +63,14 @@ function getTagsHTML(tags) {
     return `<div class="tag-container">${tags.map(tag => `<span class="tag-badge">${tag}</span>`).join('')}</div>`;
 }
 
-// --- 4. THE CORE ENGINE ---
+// --- 3. THE CORE ENGINE ---
 function updateApp() {
     const listContainer = document.getElementById('happy-hour-list');
     const directoryContainer = document.getElementById('full-directory');
     const upcomingContainer = document.getElementById('upcoming-list');
     const timeDisplay = document.getElementById('current-time');
     const searchInput = document.getElementById('directory-search');
+    const dayNav = document.getElementById('day-nav-container');
     
     const now = new Date();
     const currentHourDecimal = now.getHours() + (now.getMinutes() >= 30 ? 0.5 : 0);
@@ -90,6 +81,11 @@ function updateApp() {
         timeDisplay.innerText = `It's ${dayNames[currentDay]} at ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     }
 
+    // Show Day Nav only if viewing by Day
+    if (dayNav) {
+        dayNav.style.display = (currentView === 'day') ? 'flex' : 'none';
+    }
+
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
     const filteredDeals = deals.filter(item => {
         const matchesSearch = item.name.toLowerCase().includes(searchTerm);
@@ -97,7 +93,7 @@ function updateApp() {
         return matchesSearch && matchesTag;
     });
 
-    // --- HAPPENING NOW ---
+    // --- SECTIONS ---
     const activeDeals = filteredDeals.filter(item => {
         if (!item.days.includes(currentDay)) return false;
         const s = item.start;
@@ -120,10 +116,7 @@ function updateApp() {
         `).join('') : `<p style="text-align:center; color:#888; padding: 20px;">No matching deals active now.</p>`;
     }
 
-    // --- LATER TODAY ---
-    const laterTodayDeals = filteredDeals.filter(item => 
-        item.days.includes(currentDay) && item.start > currentHourDecimal
-    );
+    const laterTodayDeals = filteredDeals.filter(item => item.days.includes(currentDay) && item.start > currentHourDecimal);
     laterTodayDeals.sort((a, b) => a.start - b.start);
 
     if (upcomingContainer) {
@@ -153,7 +146,7 @@ function updateApp() {
                 const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
                 dealsForDay.sort((a, b) => a.start - b.start);
                 if (dealsForDay.length > 0) {
-                    directoryHTML += `<h3 class="day-header">${dayName}</h3>`;
+                    directoryHTML += `<h3 class="day-header" id="header-${dayName}">${dayName}</h3>`;
                     directoryHTML += dealsForDay.map(item => `
                         <div class="directory-card">
                             <div>
@@ -189,14 +182,13 @@ function updateApp() {
     }
 }
 
-// --- 5. INTERACTIVE LISTENERS ---
+// --- 4. INTERACTIVE LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
     const dayBtn = document.getElementById('view-by-day');
     const barBtn = document.getElementById('view-by-bar');
     const searchInput = document.getElementById('directory-search');
     const tagBtns = document.querySelectorAll('.filter-btn');
 
-    // Handle Share Clicks
     document.addEventListener('click', (e) => {
         if (e.target && e.target.classList.contains('share-btn')) {
             const name = e.target.getAttribute('data-name');
