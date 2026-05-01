@@ -44,7 +44,22 @@
             "tags": ["wine", "food"],
             "mapLink": "https://maps.app.goo.gl/Y8uETyMEVaaxWR5o8"
         },             
-
+          {
+             "name": "Pappo's Pizzeria ",
+             "deal": "$3 Off Select Appetizers, $2 Off Well Liquors, $1 Off Draft & Domestic Beers! *Dine in Only ",
+            "start": 15, "end": 18,
+            "days": [1,2,3.4.5],
+            "tags": ["beer", "food", "cocktails"],
+            "mapLink": "https://maps.app.goo.gl/qksQAwctEqxwexNE6"
+        },             
+          {
+             "name": "Pappo's Pizzeria ",
+             "deal": "Lunch Special: Any Specialty Pizza, Calzone, PaPPo's Sub, 6 Wings, or Meatball App. With a lunch-size salad $12.99. *Dine in Only",
+            "start": 11, "end": 14,
+            "days": [1,2,3.4.5],
+            "tags": ["food"],
+            "mapLink": "https://maps.app.goo.gl/qksQAwctEqxwexNE6"
+        }, 
          { 
             "name": "Sycamore", 
             "deal": "Cocktail: Pepper Queen $6.5, Beer: Broadway Brewery Bonne Femme $3, Wine: 1/2 off Glasses, Food: Pomme Frites $5, House Salad $5, Flatbread $6.5", 
