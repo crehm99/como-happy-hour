@@ -1,0 +1,74 @@
+{
+    "lastUpdated": "April 30, 2026",
+    "deals": [
+        {
+            "name": "Irene's",
+            "deal": "Monday Margarita Madness: $4 House Margaritas",
+            "start": 16, "end": 20,
+            "days": [1],
+            "mapLink": "https://www.google.com/maps/search/?api=1&query=Irenes+Columbia+MO&query_place_id=ChIJnyGSq_O33IcRr9BOvPfN7RE"
+                        
+        },
+        {
+    "name": "Irene's",
+    "deal": "Taco Tuesday: $2 Street Tacos & $3 Sol",
+    "start": 16, "end": 21,
+    "days": [4],
+    "mapLink": "https://www.google.com/maps/search/?api=1&query=Irenes+Columbia+MO&query_place_id=ChIJnyGSq_O33IcRr9BOvPfN7RE"
+},
+        {
+            "name": "Irene's",
+            "deal": "Wine Down Wednesday: Half-price glasses",
+            "start": 16, "end": 19,
+            "days": [3],
+            "mapLink": "https://www.google.com/maps/search/?api=1&query=Irenes+Columbia+MO&query_place_id=ChIJnyGSq_O33IcRr9BOvPfN7RE"
+    
+        },
+        {
+            "name": "Irene's",
+            "deal": "Thirsty Thursday: $5 Frozen Drinks & Half-price Snacks",
+            "start": 16, "end": 18,
+            "days": [4],
+            "mapLink": "https://www.google.com/maps/search/?api=1&query=Irenes+Columbia+MO&query_place_id=ChIJnyGSq_O33IcRr9BOvPfN7RE"
+        },
+        {
+            "name": "Irene's",
+            "deal": "Friday Fiesta: $10 Pitchers & Chips/Salsa",
+            "start": 15, "end": 18,
+            "days": [5],    
+            "mapLink": "https://www.google.com/maps/search/?api=1&query=Irenes+Columbia+MO&query_place_id=ChIJnyGSq_O33IcRr9BOvPfN7RE"
+        },
+        { 
+            "name": "Pizza Tree", 
+            "deal": "Slice & Pint Special", 
+            "start": 15, "end": 17, 
+            "days": [1, 2, 3, 4] 
+        },
+        { 
+            "name": "Shiloh Bar & Grill", 
+            "deal": "$3 Domestic Draws", 
+            "start": 16, "end": 19, 
+            "days": [1, 2, 3, 4, 5] 
+        },
+        { 
+            "name": "Gumby's", 
+            "deal": "Pokey Stick Specials", 
+            "start": 14, "end": 16, 
+            "days": [0, 1, 2, 3, 4, 5, 6] 
+        },
+        { 
+            "name": "The Roof", 
+            "deal": "Discounted Cocktails", 
+            "start": 18, "end": 21, 
+            "days": [3, 4, 5, 6],
+            "mapLink": "https://maps.app.goo.gl/454gPYoz7dscLnMj9"
+        
+        },
+        { 
+            "name": "Logboat Brewing", 
+            "deal": "$1 off Pints", 
+            "start": 17, "end": 19, 
+            "days": [1, 2, 3, 4] 
+        }
+    ]
+}

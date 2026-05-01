@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoMo Happy Hour Finder</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+    <header>
+        <h1>CoMo Happy Hour</h1>
+        <p id="current-time">Detecting time...</p>
+    </header>
+
+    <main>
+        <section id="active-section">
+            <h2 class="section-title">Happening Now</h2>
+            <div id="happy-hour-list">
+                </div>
+        </section>
+
+        <section id="upcoming-section">
+            <div id="upcoming-list">
+                </div>
+        </section>
+
+        <section id="directory-section">
+            <h2 class="section-title">Weekly Directory</h2>
+            
+            <div class="search-container">
+                <input type="text" id="directory-search" placeholder="Search by bar name (e.g. Irene's)...">
+            </div>
+
+            <div class="directory-controls">
+                <button id="view-by-day" class="toggle-btn active">By Day</button>
+                <button id="view-by-bar" class="toggle-btn">By Bar (A-Z)</button>
+            </div>
+
+            <div id="full-directory">
+                </div>
+        </section>
+
+        <section id="submission-section">
+            <h2 class="section-title">Found a Deal?</h2>
+            <div class="submission-card">
+                <p>Help the community! Submit a happy hour we missed.</p>
+                <form action="https://formspree.io/f/your-unique-id" method="POST" id="deal-form">
+                    <input type="text" name="barName" placeholder="Bar Name" required>
+                    <input type="text" name="dealDetails" placeholder="What is the deal? (e.g. $2 Tacos)" required>
+                    <input type="text" name="hours" placeholder="Hours (e.g. 4pm-6pm)" required>
+                    <button type="submit">Submit Deal</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p id="update-date">Loading verification date...</p>
+        <p>© 2026 CoMo Happy Hour Finder</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
