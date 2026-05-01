@@ -65,7 +65,7 @@
             "deal": "Pepper Queen cocktail $6.5, Broadway Brewery Bonne Femme beer $3, 1/2 off glasses of wine, Half Off Apps: Pomme Frites $5, House Salad $5, Flatbread $6.5", 
             "start": 15, "end": 18, 
             "days": [1,2,3,4,5,6],
-            "tags": ["food","cocktails","beer","wine"]
+            "tags": ["food","cocktails","beer","wine"],
             "mapLink": "https://maps.app.goo.gl/BteK3hgMbGTRR9W88",
             
         }    
