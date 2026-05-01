@@ -2,12 +2,23 @@ let deals = [];
 let currentView = 'day'; 
 let currentTag = 'all'; 
 
-// --- 1. DATA INITIALIZATION ---
+// --- 1. DATA INITIALIZATION & DEEP LINKING ---
 async function loadDeals() {
     try {
         const response = await fetch('deals.json?v=' + new Date().getTime());
         const data = await response.json();
         deals = data.deals; 
+
+        // Check if the URL has a specific bar shared (e.g., ?bar=Irene%27s)
+        const urlParams = new URLSearchParams(window.location.search);
+        const sharedBar = urlParams.get('bar');
+        if (sharedBar) {
+            const searchInput = document.getElementById('directory-search');
+            if (searchInput) {
+                searchInput.value = sharedBar;
+            }
+        }
+
         const footerDate = document.getElementById('update-date');
         if (footerDate) {
             footerDate.innerText = `Deals last verified: ${data.lastUpdated}`;
@@ -38,18 +49,21 @@ function formatTime(val) {
     return `${hour}:${minutes} ${ampm}`;
 }
 
-// --- 3. HELPER: SHARING LOGIC ---
+// --- 3. HELPER: SHARING WITH DEEP LINKS ---
 async function shareDeal(name, deal) {
+    // This creates a unique URL for the specific bar
+    const shareUrl = `${window.location.origin}${window.location.pathname}?bar=${encodeURIComponent(name)}`;
+    
     const shareData = {
         title: 'CoMo Happy Hour',
         text: `Check out this deal at ${name}: ${deal}!`,
-        url: window.location.href
+        url: shareUrl
     };
 
     try {
         await navigator.share(shareData);
     } catch (err) {
-        navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        navigator.clipboard.writeText(`${shareData.text} ${shareUrl}`);
         alert('Link copied to clipboard!');
     }
 }
@@ -182,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('directory-search');
     const tagBtns = document.querySelectorAll('.filter-btn');
 
-    // Handle Share Clicks Globally (Supports Apostrophes!)
+    // Handle Share Clicks
     document.addEventListener('click', (e) => {
         if (e.target && e.target.classList.contains('share-btn')) {
             const name = e.target.getAttribute('data-name');
