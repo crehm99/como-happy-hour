@@ -72,10 +72,23 @@ function updateApp() {
     const searchInput = document.getElementById('directory-search');
     const dayNav = document.getElementById('day-nav-container');
     
-    const now = new Date();
-    const currentHourDecimal = now.getHours() + (now.getMinutes() >= 30 ? 0.5 : 0);
-    const currentDay = now.getDay(); 
-    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    // This creates a timestamp specifically for Columbia, MO
+const now = new Date();
+const columbiaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Chicago"}));
+
+const currentHourDecimal = columbiaTime.getHours() + (columbiaTime.getMinutes() >= 30 ? 0.5 : 0);
+const currentDay = columbiaTime.getDay(); 
+const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+if (timeDisplay) {
+    const formattedTime = columbiaTime.toLocaleTimeString("en-US", {
+        timeZone: "America/Chicago",
+        hour: '2-digit', 
+        minute: '2-digit'
+    });
+    timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${dayNames[currentDay]} at ${formattedTime}`;
+}
+    
     
 if (timeDisplay) {
     const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
