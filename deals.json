@@ -45,24 +45,21 @@
             
         },
         { 
+            "name": "Logboat Brewing", 
+            "deal": "$1 off Pints", 
+            "start": 17, "end": 19, 
+            "days": [1, 2, 3, 4],
+            "tags": ["beer", "patio"],
+            "mapLink": "https://maps.app.goo.gl/hGHoZgwuunkXLVim6"
+        },
+        
+        { 
             "name": "Pizza Tree", 
             "deal": "Slice & Pint Special", 
             "start": 15, "end": 17, 
             "days": [1, 2, 3, 4] 
         },
-        { 
-            "name": "Shiloh Bar & Grill", 
-            "deal": "$3 Domestic Draws", 
-            "start": 16, "end": 19, 
-            "days": [1, 2, 3, 4, 5] 
-        },
-        { 
-            "name": "Gumby's", 
-            "deal": "Pokey Stick Specials", 
-            "start": 14.5, "end": 2, 
-            "days": [0, 1, 2, 3, 4, 5, 6],
-            "tags": ["food"]
-        },
+
         { 
             "name": "The Roof", 
             "deal": "Discounted Cocktails", 
@@ -71,21 +68,20 @@
             "mapLink": "https://maps.app.goo.gl/454gPYoz7dscLnMj9"
         
         },
-           { 
+         { 
+            "name": "Shiloh Bar & Grill", 
+            "deal": "$3 Domestic Draws", 
+            "start": 16, "end": 19, 
+            "days": [1, 2, 3, 4, 5] 
+        },
+         { 
             "name": "Sycamore", 
             "deal": "Cocktail: $6.5, Beer $3, 1/2 off glases of wine, Pomme Frites $5, House Salad $5", 
             "start": 15, "end": 18, 
             "days": [1,2,3, 4, 5, 6],
             "mapLink": "https://maps.app.goo.gl/BteK3hgMbGTRR9W88",
             "tags": ["food","cocktails","beer"]
-        
-        },     
+        }    
     
-        { 
-            "name": "Logboat Brewing", 
-            "deal": "$1 off Pints", 
-            "start": 17, "end": 19, 
-            "days": [1, 2, 3, 4] 
-        }
     ]
 }
