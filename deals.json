@@ -59,7 +59,7 @@
         { 
             "name": "The Roof", 
             "deal": "Discounted Cocktails", 
-            "start": 18, "end": 21, 
+            "start": 22, "end": 24, 
             "days": [3, 4, 5, 6],
             "mapLink": "https://maps.app.goo.gl/454gPYoz7dscLnMj9"
         
