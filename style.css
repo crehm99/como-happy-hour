@@ -203,6 +203,15 @@ main {
     color: #000;
 }
 
+.disclaimer {
+    font-size: 0.7rem;
+    color: #888;
+    max-width: 80%;
+    margin: 10px auto 0;
+    line-height: 1.4;
+    font-style: italic;
+}
+
 .filter-btn {
     background: transparent;
     color: #F1B82D;
