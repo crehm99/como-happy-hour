@@ -77,10 +77,10 @@ function updateApp() {
     const currentDay = now.getDay(); 
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     
-    if (timeDisplay) {
-        timeDisplay.innerText = `It's ${dayNames[currentDay]} at ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-    }
-
+if (timeDisplay) {
+    const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${dayNames[currentDay]} at ${formattedTime}`;
+}
     // Show Day Nav only if viewing by Day
     if (dayNav) {
         dayNav.style.display = (currentView === 'day') ? 'flex' : 'none';
