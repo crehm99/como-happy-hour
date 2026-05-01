@@ -144,6 +144,50 @@ main {
     gap: 12px;
 }
 
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.filter-container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto; /* Allows scrolling on small phones */
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+.filter-btn {
+    background: transparent;
+    color: #F1B82D;
+    border: 1px solid #F1B82D;
+    padding: 6px 15px;
+    border-radius: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.filter-btn.active {
+    background: #F1B82D;
+    color: #000;
+}
+
+.tag-badge {
+    background: #222; /* High contrast background */
+    color: #F1B82D; /* Mizzou Gold */
+    border: 1px solid #F1B82D;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
 #deal-form input {
     padding: 12px;
     border-radius: 6px;
