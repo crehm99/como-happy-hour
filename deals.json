@@ -46,6 +46,23 @@
             "mapLink": "https://maps.app.goo.gl/Y8uETyMEVaaxWR5o8"
         },  
           {
+             "name": "The Kitchen Grill & Games",
+             "deal": "Wednesday Specials: $5 smash burger & fries, $4 kids meal, $3 select domestic drafts, $5 select craft drafts",
+            "start": 11, "end": 22,
+            "days": [3],
+            "tags": ["beer", "food", "patio"],
+            "mapLink": "https://maps.app.goo.gl/HsiBS2JPwJuu6XAa8"
+        },  
+          {
+             "name": "The Kitchen Grill & Games",
+             "deal": "$4 select drafts, Half off shareables, $1 off specialty cocktails",
+            "start": 11, "end": 22,
+            "days": [1,2,3,4],
+            "tags": ["beer", "food", "cocktails", "patio"],
+            "mapLink": "https://maps.app.goo.gl/HsiBS2JPwJuu6XAa8"
+        },  
+        
+          {
              "name": "Ozark Mountain Biscuit Co.",
              "deal": "10% off all apps & shared plates, $1 off well cocktails, $1 off all draft beer, $1 off glasses of wine, $5 cold Busch Light & a shot, $1 off specialty drinks, complimentary fresh pork cracklins",
             "start": 15, "end": 18,
