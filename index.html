@@ -45,12 +45,12 @@
             <h2 class="section-title">Weekly Directory</h2>
             
             <div class="search-container">
-                <input type="text" id="directory-search" placeholder="Search by bar name (e.g. Irene's)...">
+                <input type="text" id="directory-search" placeholder="Search by establishment name (e.g. Irene's)...">
             </div>
 
             <div class="directory-controls">
                 <button id="view-by-day" class="toggle-btn active">By Day</button>
-                <button id="view-by-bar" class="toggle-btn">By Bar (A-Z)</button>
+                <button id="view-by-bar" class="toggle-btn">By Establishment (A-Z)</button>
             </div>
 
             <div id="day-nav-container" class="filter-container" style="display: none;">
@@ -72,7 +72,7 @@
             <div class="submission-card">
                 <p>Help the community! Submit a happy hour we missed.</p>
                 <form action="https://formspree.io/f/your-unique-id" method="POST" id="deal-form">
-                    <input type="text" name="barName" placeholder="Bar Name" required>
+                    <input type="text" name="barName" placeholder="Establishment Name" required>
                     <input type="text" name="dealDetails" placeholder="What is the deal? (e.g. $2 Tacos)" required>
                     <input type="text" name="hours" placeholder="Hours (e.g. 4pm-6pm)" required>
                     <button type="submit">Submit Deal</button>
