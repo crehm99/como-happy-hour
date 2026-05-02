@@ -38,6 +38,60 @@
         }, 
 
          {
+             "name": "Harpo's",
+             "deal": "All Logboat Drafts $2, Deep Eddy's Doubles $3",
+            "start": 16, "end": 19,
+            "days": [2,3,4],
+            "tags": ["beer", "cocktails", "patio"],
+            "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
+        }, 
+
+         {
+             "name": "Harpo's",
+             "deal": "$2 Drinks, Double Wells, Domestic Aluminums, Certain Seltzers, Bombs, Shots",
+            "start": 17, "end": 01,
+            "days": [2],
+            "tags": ["beer", "cocktails", "patio"],
+            "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
+        }, 
+
+                 {
+             "name": "Harpo's",
+             "deal": "$4 Double Wells, Jager, Skrewball, Jameson, $3 Bombs, $2 Shots",
+            "start": 17, "end": 01,
+            "days": [3],
+            "tags": ["beer", "cocktails", "patio"],
+            "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
+        }, 
+
+                 {
+             "name": "Harpo's",
+             "deal": "$3 Jumbo Drinks, Lemon Drops, Watermelon Malibu Shots",
+            "start": 17, "end": 01,
+            "days": [4],
+            "tags": ["cocktails", "patio"],
+            "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
+        }, 
+
+                 {
+             "name": "Harpo's",
+             "deal": "Served 11am-9pm: $4 Double Wells and House Bombs, $15 Domestic Beer and Seltzer Buckets. Served 3pm-9pm: $3 Fireball Shots $1 Natty Cans. Served 8pm-9pm (POWER HOUR)!: $2 Kamikaze $1 Natty CanFree Chicken Nuggets (Limit 3 Orders/Customer)",
+            "start": 11, "end": 21,
+            "days": [5],
+            "tags": ["beer", "cocktails", "food", "patio"],
+            "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
+        }, 
+
+                 {
+             "name": "Harpo's",
+             "deal": "$4 Double Wells and House Bombs, $6 Vodka Redbull, $7 Mimosa, $8 Mimosa Pitchers, $15 Happy Dad Buckets",
+            "start": 11, "end": 18,
+            "days": [6],
+            "tags": ["beer", "cocktails", "patio"],
+            "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
+        }, 
+        
+         {
              "name": "The Heidelberg",
              "deal": "Buy one appetizer, get one of equal or less value free!, $1 off Pints, $2 off Pitchers, $4.75 Long Island Teas, Long Beach Teas, and Sweet Tarts",
             "start": 15, "end": 18,
