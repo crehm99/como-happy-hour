@@ -49,7 +49,7 @@
          {
              "name": "Harpo's",
              "deal": "$2 Drinks, Double Wells, Domestic Aluminums, Certain Seltzers, Bombs, Shots",
-            "start": 17, "end": 01,
+            "start": 17, "end": 1,
             "days": [2],
             "tags": ["beer", "cocktails", "patio"],
             "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
@@ -58,7 +58,7 @@
                  {
              "name": "Harpo's",
              "deal": "$4 Double Wells, Jager, Skrewball, Jameson, $3 Bombs, $2 Shots",
-            "start": 17, "end": 01,
+            "start": 17, "end": 1,
             "days": [3],
             "tags": ["beer", "cocktails", "patio"],
             "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
@@ -67,7 +67,7 @@
                  {
              "name": "Harpo's",
              "deal": "$3 Jumbo Drinks, Lemon Drops, Watermelon Malibu Shots",
-            "start": 17, "end": 01,
+            "start": 17, "end": 1,
             "days": [4],
             "tags": ["cocktails", "patio"],
             "mapLink": "https://maps.app.goo.gl/KGYy7TY29k1fj7c26"
