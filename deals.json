@@ -18,6 +18,15 @@
             "tags": ["beer", "wine", "food", "cocktails", "patio"],
             "mapLink": "https://maps.app.goo.gl/MgNSxc45pDwt4pau5"
         }, 
+
+         {
+             "name": "The Heidelberg",
+             "deal": "Buy one appetizer, get one of equal or less value free!, $1 off Pints, $2 off Pitchers, $4.75 Long Island Teas, Long Beach Teas, and Sweet Tarts",
+            "start": 15, "end": 18,
+            "days": [2,3,4,5],
+            "tags": ["beer", "food", "cocktails"],
+            "mapLink": "https://maps.app.goo.gl/Mzq317ZzcYqVDvmH9"
+        },
           
         {
              "name": "Highball Kitchen & Cocktails",
