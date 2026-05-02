@@ -99,13 +99,13 @@
         },  
 
         {
-             "name": "Room 38",
-             "deal": "Late Night Happy Hour: $2 Fireball, $2.5 Domestic Bottles, $3 Rumplemintz, $4 Well Drinks",
-            "start": 21, "end": 1.5,
-            "days": [1,2,3,4,5,6],
-            "tags": ["beer", "food", "cocktails", "patio"],
-            "mapLink": "https://maps.app.goo.gl/nkEqWjsqLDeTwx3W9"
-        },          
+             "name": "Southside Pizza & Pub",
+             "deal": "$2 off domestic drafts, $1 off appetizers, $5 house wine",
+            "start": 15, "end": 20,
+            "days": [1,2,3,4,5],
+            "tags": ["beer", "food", "wine"],
+            "mapLink": "https://maps.app.goo.gl/gwJUjjPZYBfj5oxE9"
+        },  
         
          { 
             "name": "Sycamore", 
