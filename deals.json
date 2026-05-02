@@ -187,6 +187,15 @@
             "tags": ["beer", "food", "wine"],
             "mapLink": "https://maps.app.goo.gl/gwJUjjPZYBfj5oxE9"
         },  
+
+                {
+             "name": "Trail Stop Brewery",
+             "deal": "$5 pints and house wines. Deals on appetizers.",
+            "start": 15, "end": 18,
+            "days": [1,3,4,5],
+            "tags": ["beer", "wine", "food", "patio"],
+            "mapLink": "https://maps.app.goo.gl/P2jobirVpunD4JNa8"
+        },    
         
          { 
             "name": "Sycamore", 
