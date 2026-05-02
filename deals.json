@@ -4,7 +4,7 @@
          {
              "name": "1839 Taphouse",
              "deal": "Flip Night!  Flip heads and your your drink is on the house.",
-            "start": 21, "end": .5,
+            "start": 21, "end": 0.5,
             "days": [2],
             "tags": ["beer", "cocktails"],
             "mapLink": "https://maps.app.goo.gl/27AEtnzbAxYNdkBv9"
