@@ -1,6 +1,15 @@
 {
     "lastUpdated": "May 01, 2026",
     "deals": [
+         {
+             "name": "1839 Taphouse",
+             "deal": "Flip Night!  Flip heads and your your drink is on the house.",
+            "start": 21, "end": .5,
+            "days": [2],
+            "tags": ["beer", "cocktails"],
+            "mapLink": "https://maps.app.goo.gl/27AEtnzbAxYNdkBv9"
+        }, 
+        
         {
              "name": "Addison's Downtown",
              "deal": "Craft beer $4, $2 off glasses of wine, Nachos $8",
