@@ -9,6 +9,7 @@ async function loadDeals() {
         const data = await response.json();
         deals = data.deals; 
 
+        // Check for Shared Links (e.g., ?bar=Irene%27s)
         const urlParams = new URLSearchParams(window.location.search);
         const sharedBar = urlParams.get('bar');
         if (sharedBar) {
@@ -24,11 +25,11 @@ async function loadDeals() {
         }
         updateApp();
     } catch (error) {
-        console.error("Critical Error:", error);
+        console.error("Critical Error Loading JSON:", error);
     }
 }
 
-// --- 2. HELPERS: TIME & SCROLLING ---
+// --- 2. HELPERS: TIME, SCROLLING, & SHARING ---
 function formatTime(val) {
     let hour = Math.floor(val);
     let minutes = (val % 1) === 0.5 ? "30" : "00";
@@ -54,8 +55,12 @@ async function shareDeal(name, deal) {
         text: `Check out this deal at ${name}: ${deal}!`,
         url: shareUrl
     };
-    try { await navigator.share(shareData); }
-    catch (err) { navigator.clipboard.writeText(`${shareData.text} ${shareUrl}`); alert('Link copied!'); }
+    try {
+        await navigator.share(shareData);
+    } catch (err) {
+        navigator.clipboard.writeText(`${shareData.text} ${shareUrl}`);
+        alert('Link copied to clipboard!');
+    }
 }
 
 function getTagsHTML(tags) {
@@ -72,29 +77,37 @@ function updateApp() {
     const searchInput = document.getElementById('directory-search');
     const dayNav = document.getElementById('day-nav-container');
     
-    // This creates a timestamp specifically for Columbia, MO
-const now = new Date();
-const columbiaTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Chicago"}));
-
-const currentHourDecimal = columbiaTime.getHours() + (columbiaTime.getMinutes() >= 30 ? 0.5 : 0);
-const currentDay = columbiaTime.getDay(); 
-const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-if (timeDisplay) {
-    const formattedTime = columbiaTime.toLocaleTimeString("en-US", {
-        timeZone: "America/Chicago",
-        hour: '2-digit', 
-        minute: '2-digit'
+    // --- BULLETPROOF COLUMBIA TIME LOGIC ---
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Chicago',
+        hour12: false,
+        weekday: 'long',
+        hour: 'numeric',
+        minute: 'numeric'
     });
-    timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${dayNames[currentDay]} at ${formattedTime}`;
-}
-    
-    
-if (timeDisplay) {
-    const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${dayNames[currentDay]} at ${formattedTime}`;
-}
-    // Show Day Nav only if viewing by Day
+
+    const parts = formatter.formatToParts(now);
+    const getPart = (type) => parts.find(p => p.type === type).value;
+
+    const columbiaHour = parseInt(getPart('hour'));
+    const columbiaMinute = parseInt(getPart('minute'));
+    const columbiaDayName = getPart('weekday'); 
+
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const currentDay = dayNames.indexOf(columbiaDayName);
+    const currentHourDecimal = columbiaHour + (columbiaMinute >= 30 ? 0.5 : 0);
+
+    if (timeDisplay) {
+        const displayTime = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'America/Chicago',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        }).format(now);
+        timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${columbiaDayName} at ${displayTime}`;
+    }
+
     if (dayNav) {
         dayNav.style.display = (currentView === 'day') ? 'flex' : 'none';
     }
@@ -106,12 +119,13 @@ if (timeDisplay) {
         return matchesSearch && matchesTag;
     });
 
-    // --- SECTIONS ---
+    // --- SECTIONS: ACTIVE NOW ---
     const activeDeals = filteredDeals.filter(item => {
         if (!item.days.includes(currentDay)) return false;
         const s = item.start;
         const e = item.end === 0 ? 24 : item.end;
         const nowTime = currentHourDecimal;
+        // Standard check vs Overnight check
         return (e > s) ? (nowTime >= s && nowTime < e) : (nowTime >= s || nowTime < e);
     });
 
@@ -129,7 +143,10 @@ if (timeDisplay) {
         `).join('') : `<p style="text-align:center; color:#888; padding: 20px;">No matching deals active now.</p>`;
     }
 
-    const laterTodayDeals = filteredDeals.filter(item => item.days.includes(currentDay) && item.start > currentHourDecimal);
+    // --- SECTIONS: LATER TODAY ---
+    const laterTodayDeals = filteredDeals.filter(item => 
+        item.days.includes(currentDay) && item.start > currentHourDecimal
+    );
     laterTodayDeals.sort((a, b) => a.start - b.start);
 
     if (upcomingContainer) {
@@ -149,15 +166,15 @@ if (timeDisplay) {
         ` : "";
     }
 
-    // --- DIRECTORY ---
+    // --- SECTIONS: WEEKLY DIRECTORY ---
     if (directoryContainer) {
         let directoryHTML = "";
         if (currentView === 'day') {
-            const displayOrder = [1, 2, 3, 4, 5, 6, 0]; 
+            const displayOrder = [1, 2, 3, 4, 5, 6, 0]; // Mon-Sun
             displayOrder.forEach((dayIndex) => {
                 const dayName = dayNames[dayIndex];
                 const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
-                dealsForDay.sort((a, b) => a.start - b.start);
+                dealsForDay.sort((a, b) => a.start - b.start); // Chronological
                 if (dealsForDay.length > 0) {
                     directoryHTML += `<h3 class="day-header" id="header-${dayName}">${dayName}</h3>`;
                     directoryHTML += dealsForDay.map(item => `
@@ -174,6 +191,7 @@ if (timeDisplay) {
                 }
             });
         } else {
+            // View by Bar: Alphabetical
             const sortedBars = [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name));
             directoryHTML += sortedBars.map(item => {
                 const daysLabel = item.days.map(d => dayNames[d].substring(0, 3)).join(', ');
@@ -202,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('directory-search');
     const tagBtns = document.querySelectorAll('.filter-btn');
 
+    // Handle Share Clicks
     document.addEventListener('click', (e) => {
         if (e.target && e.target.classList.contains('share-btn')) {
             const name = e.target.getAttribute('data-name');
