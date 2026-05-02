@@ -28,6 +28,15 @@
             "mapLink": "https://maps.app.goo.gl/q1TBZD57vweEvZ126"
         },  
 
+       {
+             "name": "Deuce Pub & Pit",
+             "deal": "Every beer and well is featured on our happy hour menu. That means everything from your favorite microbrew to import and domestic bottles and drafts. If beer isn’t your thing, you can also enjoy happy hour well drinks.",
+            "start": 15, "end": 18,
+            "days": [1,2,3,4,5],
+            "tags": ["beer", "wine", "food", "cocktails", "patio"],
+            "mapLink": "https://maps.app.goo.gl/P8ZA93dRkEbxVQ3H9"
+        }, 
+
          {
              "name": "Flat Branch Pub & Brewing",
              "deal": "$5.25 Imperial Pints, $5 wine and well drinks, specialty apps",
