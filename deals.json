@@ -179,6 +179,15 @@
             "mapLink": "https://maps.app.goo.gl/nkEqWjsqLDeTwx3W9"
         },  
 
+       {
+             "name": "Six-Mile Ordinary",
+             "deal": "$2 off drinks",
+            "start": 17, "end": 19,
+            "days": [3,4],
+            "tags": ["cocktails", "patio", "beer", "wine"],
+            "mapLink": "https://maps.app.goo.gl/RtJY9S8KDBM5pMoQ8"
+        },  
+
         {
              "name": "Southside Pizza & Pub",
              "deal": "$2 off domestic drafts, $1 off appetizers, $5 house wine",
