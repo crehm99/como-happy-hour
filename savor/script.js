@@ -39,13 +39,6 @@ function getTagsHTML(tags) {
     return `<div class="tag-container">${tags.map(tag => `<span class="tag-badge">${tag}</span>`).join('')}</div>`;
 }
 
-async function shareDeal(name, deal) {
-    const shareUrl = `${window.location.origin}${window.location.pathname}?bar=${encodeURIComponent(name)}`;
-    const shareData = { title: 'Savor Happy Hour', text: `Check out ${name}: ${deal}!`, url: shareUrl };
-    try { await navigator.share(shareData); }
-    catch (err) { navigator.clipboard.writeText(`${shareData.text} ${shareUrl}`); alert('Link copied!'); }
-}
-
 function updateApp() {
     const listContainer = document.getElementById('happy-hour-list');
     const directoryContainer = document.getElementById('full-directory');
@@ -53,6 +46,7 @@ function updateApp() {
     const timeDisplay = document.getElementById('current-time');
     const searchInput = document.getElementById('directory-search');
     
+    // TIMEZONE LOGIC
     const now = new Date();
     const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour12: false, weekday: 'long', hour: 'numeric', minute: 'numeric' });
     const parts = formatter.formatToParts(now);
@@ -85,17 +79,14 @@ function updateApp() {
     });
 
     if (listContainer) {
-        listContainer.innerHTML = activeDeals.length > 0 ? `<h2 class="section-title">Active Now</h2>` + activeDeals.map(item => `
+        listContainer.innerHTML = activeDeals.map(item => `
             <div class="deal-card">
-                <h2><a href="${item.mapLink}" target="_blank" class="map-link" style="color:var(--savor-blue); text-decoration:none;">${item.name}</a></h2>
+                <h2 style="font-family:'Playfair Display', serif; color:var(--savor-blue);">${item.name}</h2>
                 <p>${item.deal}</p>
                 ${getTagsHTML(item.tags)}
-                <div class="card-footer">
-                    <span class="time-badge">Until ${formatTime(item.end)}</span>
-                    <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
-                </div>
+                <div style="margin-top:15px; font-weight:bold; color:var(--savor-blue);">Until ${formatTime(item.end)}</div>
             </div>
-        `).join('') : "";
+        `).join('');
     }
 
     // LATER TODAY
@@ -104,20 +95,17 @@ function updateApp() {
     if (upcomingContainer) {
         upcomingContainer.innerHTML = laterTodayDeals.length > 0 ? `<h2 class="section-title">Later Today</h2>` + laterTodayDeals.map(item => `
             <div class="deal-card">
-                <h2><a href="${item.mapLink}" target="_blank" class="map-link" style="color:var(--savor-blue); text-decoration:none;">${item.name}</a></h2>
+                <h2 style="font-family:'Playfair Display', serif; color:var(--savor-blue);">${item.name}</h2>
                 <p>${item.deal}</p>
                 ${getTagsHTML(item.tags)}
-                <div class="card-footer">
-                    <span class="time-badge upcoming">Starts ${formatTime(item.start)}</span>
-                    <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
-                </div>
+                <div style="margin-top:15px; font-weight:bold; color:#666;">Starts ${formatTime(item.start)}</div>
             </div>
         `).join('') : "";
     }
 
     // DIRECTORY
     if (directoryContainer) {
-        let directoryHTML = `<h2 class="section-title">Weekly Directory</h2>`;
+        let directoryHTML = "";
         if (currentView === 'day') {
             [1, 2, 3, 4, 5, 6, 0].forEach((dayIndex) => {
                 const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
@@ -126,14 +114,14 @@ function updateApp() {
                     directoryHTML += `<h3 class="day-header" id="header-${dayNames[dayIndex]}">${dayNames[dayIndex]}</h3>`;
                     directoryHTML += dealsForDay.map(item => `
                         <div class="directory-card">
-                            <div style="flex: 1;"><div style="font-weight:bold; color:var(--savor-blue); font-size:1.2rem;">${item.name}</div><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div>
+                            <div style="flex: 1;"><div style="font-weight:bold; color:var(--savor-blue);">${item.name}</div><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div>
                             <div style="font-weight:bold; color:#666;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
                         </div>`).join('');
                 }
             });
         } else {
             [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
-                directoryHTML += `<div class="directory-card"><div style="flex: 1;"><div style="font-weight:bold; color:var(--savor-blue); font-size:1.2rem;">${item.name}</div><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:bold; color:#666;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
+                directoryHTML += `<div class="directory-card"><div style="flex: 1;"><div style="font-weight:bold; color:var(--savor-blue);">${item.name}</div><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:bold; color:#666;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
             });
         }
         directoryContainer.innerHTML = directoryHTML;
@@ -145,10 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const tagBtns = document.querySelectorAll('.filter-btn');
     const dayBtn = document.getElementById('view-by-day');
     const barBtn = document.getElementById('view-by-bar');
-    document.addEventListener('click', (e) => { if (e.target.classList.contains('share-btn')) { shareDeal(e.target.dataset.name, e.target.dataset.deal); } });
     if (dayBtn && barBtn) {
-        dayBtn.addEventListener('click', () => { currentView = 'day'; dayBtn.classList.add('active'); barBtn.classList.remove('active'); updateApp(); });
-        barBtn.addEventListener('click', () => { currentView = 'bar'; barBtn.classList.add('active'); dayBtn.classList.remove('active'); updateApp(); });
+        dayBtn.addEventListener('click', () => { currentView = 'day'; dayBtn.classList.add('active'); barBtn.classList.remove('active'); document.getElementById('day-nav-container').style.display='none'; updateApp(); });
+        barBtn.addEventListener('click', () => { currentView = 'bar'; barBtn.classList.add('active'); dayBtn.classList.remove('active'); document.getElementById('day-nav-container').style.display='none'; updateApp(); });
     }
     tagBtns.forEach(btn => { btn.addEventListener('click', () => { tagBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentTag = btn.dataset.tag; updateApp(); }); });
     if (searchInput) searchInput.addEventListener('input', updateApp);
