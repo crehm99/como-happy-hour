@@ -2,200 +2,36 @@
     --savor-blue: #3d5a6c;
     --savor-gold: #c9a66b;
     --savor-bg: #f8f9fa;
-    --savor-text: #2d2d2d;
-    --savor-white: #ffffff;
 }
 
-body {
-    background-color: var(--savor-bg);
-    color: var(--savor-text);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-}
+body { background: var(--savor-bg); color: #333; font-family: 'Inter', sans-serif; margin: 0; }
 
-/* --- HEADER & TITLE --- */
-header {
-    background-color: var(--savor-blue);
-    color: white;
-    padding: 80px 20px; /* Increased padding to make header taller */
-    text-align: center;
+header { 
+    background: var(--savor-blue); 
+    color: white; 
+    padding: 60px 20px; 
+    text-align: center; 
     border-bottom: 5px solid var(--savor-gold);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
-header h1 {
-    font-family: 'Playfair Display', serif;
-    margin: 0;
-    font-size: 3.5rem; /* Large, bold Savor-style title */
-    color: white;
-    letter-spacing: -1px;
-}
+h1 { font-family: 'Playfair Display', serif; margin: 0; font-size: 2.5rem; }
 
-#current-time {
-    margin-top: 15px;
-    font-size: 1.1rem;
-    opacity: 0.9;
-}
+main { max-width: 800px; margin: 0 auto; padding: 20px; }
 
-/* --- MAIN LAYOUT --- */
-main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px;
-}
+#directory-search { width: 100%; padding: 12px; border: 1px solid #ddd; margin-bottom: 15px; border-radius: 4px; }
 
-/* Ensure the filter buttons wrap nicely and look uniform */
-.tag-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
+.tag-filters, #day-nav-container, .view-toggle { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
 
-.filter-btn {
-    background: white;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    border-radius: 4px;
-    color: var(--savor-blue);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.9rem;
-    min-width: 80px; /* Ensures buttons have a consistent presence */
-    transition: all 0.2s ease;
-}
+button { background: white; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; cursor: pointer; color: var(--savor-blue); font-weight: 600; }
+button.active { background: var(--savor-blue) !important; color: white !important; }
 
-/* Updated 'upcoming' badge to remove that weird grey background */
-.time-badge.upcoming {
-    background-color: #f1f3f5 !important;
-    color: var(--savor-blue) !important;
-    border: 1px solid #dee2e6;
-    font-weight: 600;
-}
+.deal-card, .directory-card { background: white; border: 1px solid #eee; padding: 20px; margin-bottom: 15px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
-h2.section-title {
-    font-family: 'Playfair Display', serif;
-    color: var(--savor-blue);
-    font-size: 2rem;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-}
+.tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.tag-badge { background: #fdf6e7; color: var(--savor-gold); border: 1px solid var(--savor-gold); padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: capitalize; }
 
-.day-header {
-    font-family: 'Playfair Display', serif;
-    color: var(--savor-blue);
-    font-size: 1.8rem;
-    margin: 40px 0 20px 0;
-}
-
-/* --- SEARCH & DIRECTORY CONTROLS --- */
-#filter-controls {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    padding: 30px;
-    border-radius: 8px;
-    margin-bottom: 40px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-#directory-search {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
-
-.tag-filters, #day-nav-container, .view-toggle {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
-    justify-content: center;
-}
-
-button {
-    background: white;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    border-radius: 4px;
-    color: var(--savor-blue);
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-button.active {
-    background: var(--savor-blue) !important;
-    color: white !important;
-    border-color: var(--savor-blue);
-}
-
-/* --- CARD STYLING --- */
-.deal-card, .directory-card {
-    background: var(--savor-white);
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    padding: 30px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.04);
-}
-
-.map-link {
-    color: var(--savor-blue);
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.directory-name {
-    font-weight: bold;
-    font-size: 1.3rem;
-    color: var(--savor-blue);
-}
-
-/* --- TAG FIX --- */
-.tag-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.tag-badge {
-    background: #fdf6e7;
-    color: var(--savor-gold);
-    border: 1px solid var(--savor-gold);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    text-transform: capitalize;
-    font-weight: 600;
-}
-
-/* Specific badge for "Later Today" items */
-.time-badge.upcoming {
-    background-color: #e9ecef !important; /* Soft light grey */
-    color: var(--savor-blue) !important;   /* Brand blue text */
-    border: 1px solid #dee2e6;
-}
-
-/* --- FOOTER --- */
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    padding
+.card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #f9f9f9; }
+.time-badge { background: var(--savor-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
+.time-badge.upcoming { background: #e9ecef; color: #666; }
 
     
