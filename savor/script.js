@@ -2,13 +2,15 @@ let deals = [];
 let currentView = 'day'; 
 let currentTag = 'all'; 
 
+// --- 1. DATA INITIALIZATION ---
 async function loadDeals() {
     try {
-        // NOTE THE ../ PATHING TO REACH THE MAIN FOLDER
+        // Step out of /savor folder to get main deals.json
         const response = await fetch('../deals.json?v=' + new Date().getTime());
         const data = await response.json();
         deals = data.deals; 
 
+        // Check for Shared Links
         const urlParams = new URLSearchParams(window.location.search);
         const sharedBar = urlParams.get('bar');
         if (sharedBar) {
@@ -17,15 +19,16 @@ async function loadDeals() {
         }
 
         const footerDate = document.getElementById('update-date');
-        if (footerDate) footerDate.innerText = `Deals last verified: ${data.lastUpdated}`;
-        
+        if (footerDate) {
+            footerDate.innerText = `Deals last verified: ${data.lastUpdated}`;
+        }
         updateApp();
     } catch (error) {
-        console.error("Error:", error);
+        console.error("Critical Error Loading JSON:", error);
     }
 }
 
-// Reuse all your previous helper functions (formatTime, shareDeal, scrollToDay, etc.)
+// --- 2. HELPERS: TIME, SCROLLING, & SHARING ---
 function formatTime(val) {
     let hour = Math.floor(val);
     let minutes = (val % 1) === 0.5 ? "30" : "00";
@@ -36,18 +39,29 @@ function formatTime(val) {
     return `${hour}:${minutes} ${ampm}`;
 }
 
-async function shareDeal(name, deal) {
-    const shareUrl = `${window.location.origin}${window.location.pathname}?bar=${encodeURIComponent(name)}`;
-    const shareData = { title: 'Savor Happy Hour', text: `Check out ${name}: ${deal}!`, url: shareUrl };
-    try { await navigator.share(shareData); }
-    catch (err) { navigator.clipboard.writeText(`${shareData.text} ${shareUrl}`); alert('Link copied!'); }
-}
-
 function scrollToDay(dayId) {
     const element = document.getElementById(`header-${dayId}`);
-    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
 
+async function shareDeal(name, deal) {
+    const shareUrl = `${window.location.origin}${window.location.pathname}?bar=${encodeURIComponent(name)}`;
+    const shareData = {
+        title: 'Savor Happy Hour',
+        text: `Check out this deal at ${name}: ${deal}!`,
+        url: shareUrl
+    };
+    try {
+        await navigator.share(shareData);
+    } catch (err) {
+        navigator.clipboard.writeText(`${shareData.text} ${shareUrl}`);
+        alert('Link copied to clipboard!');
+    }
+}
+
+// --- 3. THE CORE ENGINE ---
 function updateApp() {
     const listContainer = document.getElementById('happy-hour-list');
     const directoryContainer = document.getElementById('full-directory');
@@ -55,7 +69,7 @@ function updateApp() {
     const timeDisplay = document.getElementById('current-time');
     const searchInput = document.getElementById('directory-search');
     
-    // --- TIMEZONE LOCKED TO COLUMBIA ---
+    // --- BULLETPROOF COLUMBIA TIME LOGIC ---
     const now = new Date();
     const formatter = new Intl.DateTimeFormat('en-US', {
         timeZone: 'America/Chicago',
@@ -64,8 +78,10 @@ function updateApp() {
         hour: 'numeric',
         minute: 'numeric'
     });
+
     const parts = formatter.formatToParts(now);
     const getPart = (type) => parts.find(p => p.type === type).value;
+
     const columbiaHour = parseInt(getPart('hour'));
     const columbiaMinute = parseInt(getPart('minute'));
     const columbiaDayName = getPart('weekday'); 
@@ -76,7 +92,10 @@ function updateApp() {
 
     if (timeDisplay) {
         const displayTime = new Intl.DateTimeFormat('en-US', {
-            timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hour12: true
+            timeZone: 'America/Chicago',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
         }).format(now);
         timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${columbiaDayName} at ${displayTime}`;
     }
@@ -88,31 +107,58 @@ function updateApp() {
         return matchesSearch && matchesTag;
     });
 
-    // ACTIVE DEALS
+    // --- SECTIONS: ACTIVE NOW ---
     const activeDeals = filteredDeals.filter(item => {
         if (!item.days.includes(currentDay)) return false;
         const s = item.start;
         const e = item.end === 0 ? 24 : item.end;
-        return (e > s) ? (currentHourDecimal >= s && currentHourDecimal < e) : (currentHourDecimal >= s || currentHourDecimal < e);
+        const nowTime = currentHourDecimal;
+        return (e > s) ? (nowTime >= s && nowTime < e) : (nowTime >= s || nowTime < e);
     });
 
     if (listContainer) {
-        listContainer.innerHTML = activeDeals.map(item => `
+        listContainer.innerHTML = activeDeals.length > 0 ? activeDeals.map(item => `
             <div class="deal-card">
-                <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
-                <p>${item.deal}</p>
-                <div class="card-footer">
+                <div>
+                    <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
+                    <p style="margin: 10px 0;">${item.deal}</p>
+                </div>
+                <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center;">
                     <span class="time-badge">Until ${formatTime(item.end)}</span>
                     <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
                 </div>
             </div>
-        `).join('');
+        `).join('') : `<p style="text-align:center; color:#888; padding: 20px;">No matching deals active now.</p>`;
     }
 
-    // DIRECTORY
+    // --- SECTIONS: LATER TODAY ---
+    const laterTodayDeals = filteredDeals.filter(item => 
+        item.days.includes(currentDay) && item.start > currentHourDecimal
+    );
+    laterTodayDeals.sort((a, b) => a.start - b.start);
+
+    if (upcomingContainer) {
+        upcomingContainer.innerHTML = laterTodayDeals.length > 0 ? `
+            <h2 class="section-title">Later Today</h2>
+            ${laterTodayDeals.map(item => `
+                <div class="deal-card">
+                    <div>
+                        <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
+                        <p style="margin: 10px 0;">${item.deal}</p>
+                    </div>
+                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="time-badge" style="background: #666;">${formatTime(item.start)} - ${formatTime(item.end)}</span>
+                        <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
+                    </div>
+                </div>
+            `).join('')}
+        ` : "";
+    }
+
+    // --- SECTIONS: WEEKLY DIRECTORY ---
     if (directoryContainer) {
         let directoryHTML = "";
-        const displayOrder = [1, 2, 3, 4, 5, 6, 0];
+        const displayOrder = [1, 2, 3, 4, 5, 6, 0]; 
         displayOrder.forEach((dayIndex) => {
             const dayName = dayNames[dayIndex];
             const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
@@ -121,11 +167,13 @@ function updateApp() {
                 directoryHTML += `<h3 class="day-header" id="header-${dayName}">${dayName}</h3>`;
                 directoryHTML += dealsForDay.map(item => `
                     <div class="directory-card">
-                        <div>
+                        <div style="flex: 1;">
                             <div class="directory-name">${item.name}</div>
-                            <div class="directory-details">${item.deal}</div>
+                            <div class="directory-details" style="margin: 5px 0;">${item.deal}</div>
                         </div>
-                        <div class="directory-time">${formatTime(item.start)} - ${formatTime(item.end)}</div>
+                        <div class="directory-time" style="font-weight: bold; color: #666; min-width: 150px; text-align: right;">
+                            ${formatTime(item.start)} - ${formatTime(item.end)}
+                        </div>
                     </div>
                 `).join('');
             }
@@ -134,13 +182,16 @@ function updateApp() {
     }
 }
 
+// --- 4. INTERACTIVE LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('directory-search');
     const tagBtns = document.querySelectorAll('.filter-btn');
 
     document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('share-btn')) {
-            shareDeal(e.target.dataset.name, e.target.dataset.deal);
+        if (e.target && e.target.classList.contains('share-btn')) {
+            const name = e.target.getAttribute('data-name');
+            const deal = e.target.getAttribute('data-deal');
+            shareDeal(name, deal);
         }
     });
 
@@ -148,11 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             tagBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            currentTag = btn.dataset.tag;
+            currentTag = btn.getAttribute('data-tag');
             updateApp();
         });
     });
 
-    if (searchInput) searchInput.addEventListener('input', updateApp);
+    if (searchInput) { searchInput.addEventListener('input', () => { updateApp(); }); }
     loadDeals();
 });
