@@ -107,16 +107,18 @@ function updateApp() {
     );
     laterTodayDeals.sort((a, b) => a.start - b.start);
 
-    if (upcomingContainer) {
+if (upcomingContainer) {
         upcomingContainer.innerHTML = laterTodayDeals.length > 0 ? `
             <h2 class="section-title">Later Today</h2>
             ${laterTodayDeals.map(item => `
                 <div class="deal-card">
-                    <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
-                    <p>${item.deal}</p>
-                    ${getTagsHTML(item.tags)}
-                    <div class="card-footer">
-                        <span class="time-badge" style="background:#666;">Starts ${formatTime(item.start)}</span>
+                    <div>
+                        <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
+                        <p style="margin: 10px 0;">${item.deal}</p>
+                        ${getTagsHTML(item.tags)}
+                    </div>
+                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top:15px;">
+                        <span class="time-badge upcoming">Starts ${formatTime(item.start)}</span>
                         <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
                     </div>
                 </div>
