@@ -4,7 +4,7 @@
     --savor-bg: #f8f9fa;
 }
 
-body { background: var(--savor-bg); color: #333; font-family: 'Inter', sans-serif; margin: 0; }
+body { background: var(--savor-bg); color: #333; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
 
 header { 
     background: var(--savor-blue); 
@@ -14,24 +14,52 @@ header {
     border-bottom: 5px solid var(--savor-gold);
 }
 
-h1 { font-family: 'Playfair Display', serif; margin: 0; font-size: 2.5rem; }
+header h1 { font-family: 'Playfair Display', serif; margin: 0; font-size: 2.8rem; }
+#current-time { margin-top: 10px; opacity: 0.9; }
 
 main { max-width: 800px; margin: 0 auto; padding: 20px; }
 
-#directory-search { width: 100%; padding: 12px; border: 1px solid #ddd; margin-bottom: 15px; border-radius: 4px; }
+/* SEARCH BAR FIX */
+#controls-container { margin-bottom: 25px; text-align: center; }
+#directory-search { 
+    width: 100%; 
+    max-width: 100%; 
+    padding: 14px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
 
+/* BUTTONS & TAGS */
 .tag-filters, #day-nav-container, .view-toggle { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
 
-button { background: white; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; cursor: pointer; color: var(--savor-blue); font-weight: 600; }
+button { 
+    background: white; 
+    border: 1px solid #ccc; 
+    padding: 8px 14px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    color: var(--savor-blue); 
+    font-weight: 600; 
+}
+
 button.active { background: var(--savor-blue) !important; color: white !important; }
 
-.deal-card, .directory-card { background: white; border: 1px solid #eee; padding: 20px; margin-bottom: 15px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+/* CARD & TAG BADGES */
+.deal-card, .directory-card { background: white; border: 1px solid #e0e0e0; padding: 25px; margin-bottom: 20px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
 
-.tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.tag-badge { background: #fdf6e7; color: var(--savor-gold); border: 1px solid var(--savor-gold); padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; text-transform: capitalize; }
+.tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.tag-badge { background: #fdf6e7; color: var(--savor-gold); border: 1px solid var(--savor-gold); padding: 3px 10px; border-radius: 15px; font-size: 0.75rem; text-transform: capitalize; }
 
-.card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #f9f9f9; }
-.time-badge { background: var(--savor-blue); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
-.time-badge.upcoming { background: #e9ecef; color: #666; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; }
+.time-badge { background: var(--savor-blue); color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.85rem; }
+.time-badge.upcoming { background: #f1f3f5; color: var(--savor-blue); border: 1px solid #ddd; }
+
+.section-title { font-family: 'Playfair Display', serif; color: var(--savor-blue); margin: 40px 0 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+.day-header { font-family: 'Playfair Display', serif; color: var(--savor-blue); margin: 30px 0 15px; }
+
+footer { text-align: center; padding: 60px 20px; background: #fff; border-top: 1px solid #eee; }
 
     
