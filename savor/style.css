@@ -1,1 +1,94 @@
+:root {
+    --savor-blue: #3d5a6c;
+    --savor-gold: #c9a66b;
+    --savor-bg: #fdfdfd;
+    --savor-text: #2d2d2d;
+    --savor-white: #ffffff;
+}
 
+body {
+    background-color: var(--savor-bg);
+    color: var(--savor-text);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--savor-blue);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 5px solid var(--savor-gold);
+}
+
+h1, h2, .day-header {
+    font-family: 'Playfair Display', serif;
+    color: var(--savor-blue);
+}
+
+header h1 { color: white; margin: 0; font-size: 2.5rem; }
+
+#filter-controls { padding: 20px; max-width: 800px; margin: 0 auto; }
+
+#directory-search {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.deal-card, .directory-card {
+    background: var(--savor-white);
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.map-link { color: var(--savor-blue); text-decoration: none; font-weight: bold; }
+
+.tag-badge {
+    background: #fdf6e7;
+    color: var(--savor-gold);
+    border: 1px solid var(--savor-gold);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    margin-right: 5px;
+}
+
+.time-badge {
+    background: var(--savor-blue);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.share-btn {
+    background: none;
+    border: 1px solid var(--savor-blue);
+    color: var(--savor-blue);
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button.active { background-color: var(--savor-blue) !important; color: white !important; }
+
+#day-nav-container { display: flex; overflow-x: auto; gap: 10px; padding: 10px; justify-content: center; }
+
+.day-nav-btn {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: var(--savor-blue);
+    cursor: pointer;
+}
+
+footer { text-align: center; padding: 40px; background: #eee; font-size: 0.8rem; }
+.disclaimer { font-style: italic; color: #666; }
