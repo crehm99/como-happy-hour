@@ -76,3 +76,32 @@ main { max-width: 900px; margin: 0 auto; padding: 20px; }
     border-radius: 4px;
     cursor: pointer;
 }
+
+That red X next to your commit message is essentially a "hallucination" by GitHub's background systems. Because we created a subfolder with its own code, GitHub is trying to run a default build process (called Jekyll) that wasn't designed for this specific setup.
+
+As long as you can see the content at [comohappyhour.com/savor](https://comohappyhour.com/savor), you can safely ignore that warning.
+
+However, looking at your screenshot image_92f414.png from a moment ago, the reason the tags were failing isn't because of a "failure" in GitHub—it was because the savor/style.css was missing the specific instructions to turn those words into badges.
+
+The Final Step to Fix the Tags
+To make your tags look like they do on the main site (and not just one long string of text), make sure your savor/style.css includes this exact block:
+
+CSS
+/* This is the missing piece that fixes the "one big word" issue */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* This physically separates the tags */
+    margin-top: 10px;
+}
+
+.tag-badge {
+    background: #fdf6e7;
+    color: var(--savor-gold);
+    border: 1px solid var(--savor-gold);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    text-transform: capitalize;
+    display: inline-block;
+}
