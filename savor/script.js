@@ -16,9 +16,7 @@ async function loadDeals() {
         const footerDate = document.getElementById('update-date');
         if (footerDate) footerDate.innerText = `Deals last verified: ${data.lastUpdated}`;
         updateApp();
-    } catch (error) {
-        console.error("Error:", error);
-    }
+    } catch (error) { console.error("Error:", error); }
 }
 
 function formatTime(val) {
@@ -56,9 +54,7 @@ function updateApp() {
     const searchInput = document.getElementById('directory-search');
     
     const now = new Date();
-    const formatter = new Intl.DateTimeFormat('en-US', {
-        timeZone: 'America/Chicago', hour12: false, weekday: 'long', hour: 'numeric', minute: 'numeric'
-    });
+    const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour12: false, weekday: 'long', hour: 'numeric', minute: 'numeric' });
     const parts = formatter.formatToParts(now);
     const getPart = (type) => parts.find(p => p.type === type).value;
     const columbiaHour = parseInt(getPart('hour'));
@@ -69,9 +65,7 @@ function updateApp() {
     const currentHourDecimal = columbiaHour + (columbiaMinute >= 30 ? 0.5 : 0);
 
     if (timeDisplay) {
-        const displayTime = new Intl.DateTimeFormat('en-US', {
-            timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hour12: true
-        }).format(now);
+        const displayTime = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hour12: true }).format(now);
         timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${columbiaDayName} at ${displayTime}`;
     }
 
@@ -132,27 +126,14 @@ function updateApp() {
                     directoryHTML += `<h3 class="day-header" id="header-${dayNames[dayIndex]}">${dayNames[dayIndex]}</h3>`;
                     directoryHTML += dealsForDay.map(item => `
                         <div class="directory-card">
-                            <div style="flex: 1;">
-                                <div style="font-weight:bold; color:var(--savor-blue); font-size:1.2rem;">${item.name}</div>
-                                <div style="margin:5px 0;">${item.deal}</div>
-                                ${getTagsHTML(item.tags)}
-                            </div>
+                            <div style="flex: 1;"><div style="font-weight:bold; color:var(--savor-blue); font-size:1.2rem;">${item.name}</div><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div>
                             <div style="font-weight:bold; color:#666;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
-                        </div>
-                    `).join('');
+                        </div>`).join('');
                 }
             });
         } else {
-            [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name)).map(item => {
-                directoryHTML += `
-                    <div class="directory-card">
-                        <div style="flex: 1;">
-                            <div style="font-weight:bold; color:var(--savor-blue); font-size:1.2rem;">${item.name}</div>
-                            <div style="margin:5px 0;">${item.deal}</div>
-                            ${getTagsHTML(item.tags)}
-                        </div>
-                        <div style="font-weight:bold; color:#666;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
-                    </div>`;
+            [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
+                directoryHTML += `<div class="directory-card"><div style="flex: 1;"><div style="font-weight:bold; color:var(--savor-blue); font-size:1.2rem;">${item.name}</div><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:bold; color:#666;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
             });
         }
         directoryContainer.innerHTML = directoryHTML;
@@ -164,27 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const tagBtns = document.querySelectorAll('.filter-btn');
     const dayBtn = document.getElementById('view-by-day');
     const barBtn = document.getElementById('view-by-bar');
-
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('share-btn')) {
-            shareDeal(e.target.dataset.name, e.target.dataset.deal);
-        }
-    });
-
+    document.addEventListener('click', (e) => { if (e.target.classList.contains('share-btn')) { shareDeal(e.target.dataset.name, e.target.dataset.deal); } });
     if (dayBtn && barBtn) {
         dayBtn.addEventListener('click', () => { currentView = 'day'; dayBtn.classList.add('active'); barBtn.classList.remove('active'); updateApp(); });
         barBtn.addEventListener('click', () => { currentView = 'bar'; barBtn.classList.add('active'); dayBtn.classList.remove('active'); updateApp(); });
     }
-
-    tagBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tagBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentTag = btn.dataset.tag;
-            updateApp();
-        });
-    });
-
+    tagBtns.forEach(btn => { btn.addEventListener('click', () => { tagBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentTag = btn.dataset.tag; updateApp(); }); });
     if (searchInput) searchInput.addEventListener('input', updateApp);
     loadDeals();
 });
