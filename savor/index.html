@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header>
         <h1>Savor Happy Hour</h1>
         <p id="current-time">Detecting time...</p>
@@ -29,14 +28,12 @@
 
         <section id="directory-section">
             <div class="search-container">
-                <input type="text" id="directory-search" placeholder="Search by establishment name (e.g. Irene's)...">
+                <input type="text" id="directory-search" placeholder="Search by establishment name...">
             </div>
-
             <div class="directory-controls">
                 <button id="view-by-day" class="toggle-btn active">By Day</button>
                 <button id="view-by-bar" class="toggle-btn">By Establishment (A-Z)</button>
             </div>
-
             <div id="day-nav-container" class="filter-container">
                 <button class="day-nav-btn" onclick="scrollToDay('Monday')">Mon</button>
                 <button class="day-nav-btn" onclick="scrollToDay('Tuesday')">Tue</button>
@@ -46,16 +43,9 @@
                 <button class="day-nav-btn" onclick="scrollToDay('Saturday')">Sat</button>
                 <button class="day-nav-btn" onclick="scrollToDay('Sunday')">Sun</button>
             </div>
-
             <div id="full-directory"></div>
         </section>
     </main>
-
-    <footer>
-        <p id="update-date">Deals last verified: --</p>
-        <p class="disclaimer">Note: Deals are subject to change and are not guaranteed.</p>
-    </footer>
-
     <script src="script.js"></script>
 </body>
 </html>
