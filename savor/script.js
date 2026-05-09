@@ -7,8 +7,6 @@ async function loadDeals() {
         const response = await fetch('../deals.json?v=' + new Date().getTime());
         const data = await response.json();
         deals = data.deals; 
-        const footerDate = document.getElementById('update-date');
-        if (footerDate) footerDate.innerText = `Deals last verified: ${data.lastUpdated}`;
         updateApp();
     } catch (error) { console.error("Error:", error); }
 }
@@ -71,14 +69,14 @@ function updateApp() {
     });
 
     if (listContainer) {
-        listContainer.innerHTML = activeDeals.map(item => `
+        listContainer.innerHTML = activeDeals.length > 0 ? `<h2 class="section-title">Happening Now</h2>` + activeDeals.map(item => `
             <div class="deal-card">
-                <h2 style="font-family:'Playfair Display', serif; color:var(--savor-blue); margin:0 0 10px 0;">${item.name}</h2>
-                <p>${item.deal}</p>
+                <h2 style="margin:0 0 10px 0; font-weight:900; font-size:1.8rem;">${item.name}</h2>
+                <p style="font-size:1.1rem; line-height:1.4;">${item.deal}</p>
                 ${getTagsHTML(item.tags)}
                 <span class="card-time">UNTIL ${formatTime(item.end)}</span>
             </div>
-        `).join('');
+        `).join('') : "";
     }
 
     const laterTodayDeals = filteredDeals.filter(item => item.days.includes(currentDay) && item.start > currentHourDecimal);
@@ -86,8 +84,8 @@ function updateApp() {
     if (upcomingContainer) {
         upcomingContainer.innerHTML = laterTodayDeals.length > 0 ? `<h2 class="section-title">Later Today</h2>` + laterTodayDeals.map(item => `
             <div class="deal-card">
-                <h2 style="font-family:'Playfair Display', serif; color:var(--savor-blue); margin:0 0 10px 0;">${item.name}</h2>
-                <p>${item.deal}</p>
+                <h2 style="margin:0 0 10px 0; font-weight:900; font-size:1.8rem;">${item.name}</h2>
+                <p style="font-size:1.1rem; line-height:1.4;">${item.deal}</p>
                 ${getTagsHTML(item.tags)}
                 <span class="card-time">STARTS ${formatTime(item.start)}</span>
             </div>
@@ -95,7 +93,7 @@ function updateApp() {
     }
 
     if (directoryContainer) {
-        let directoryHTML = "";
+        let directoryHTML = `<h2 class="section-title">Weekly Directory</h2>`;
         if (currentView === 'day') {
             [1, 2, 3, 4, 5, 6, 0].forEach((dayIndex) => {
                 const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
@@ -104,14 +102,14 @@ function updateApp() {
                     directoryHTML += `<div class="day-header" id="header-${dayNames[dayIndex]}">${dayNames[dayIndex]}</div>`;
                     directoryHTML += dealsForDay.map(item => `
                         <div class="directory-card">
-                            <div style="flex: 1;"><div style="font-weight:900; color:var(--savor-blue); font-size:1.3rem; margin-bottom:5px;">${item.name}</div><div>${item.deal}</div>${getTagsHTML(item.tags)}</div>
-                            <div style="font-weight:800; color:#444; min-width:160px; text-align:right;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
+                            <div style="flex: 1;"><div style="font-weight:900; color:var(--savor-blue); font-size:1.4rem; margin-bottom:5px;">${item.name}</div><div style="font-size:1.1rem;">${item.deal}</div>${getTagsHTML(item.tags)}</div>
+                            <div style="font-weight:900; color:#444; min-width:160px; text-align:right; font-size:1.1rem;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
                         </div>`).join('');
                 }
             });
         } else {
             [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
-                directoryHTML += `<div class="directory-card"><div style="flex: 1;"><div style="font-weight:900; color:var(--savor-blue); font-size:1.3rem;">${item.name}</div><div>${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:800; color:#444;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
+                directoryHTML += `<div class="directory-card"><div style="flex: 1;"><div style="font-weight:900; color:var(--savor-blue); font-size:1.4rem;">${item.name}</div><div>${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:900; color:#444;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
             });
         }
         directoryContainer.innerHTML = directoryHTML;
