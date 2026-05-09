@@ -3,18 +3,24 @@ body { background: var(--savor-bg); color: #222; font-family: 'Inter', sans-seri
 header { background: var(--savor-blue); color: white; padding: 60px 20px; text-align: center; border-bottom: 5px solid var(--savor-gold); }
 header h1 { font-family: 'Playfair Display', serif; margin: 0; font-size: 2.8rem; text-transform: uppercase; }
 main { max-width: 900px; margin: 0 auto; padding: 20px; }
+
 .filter-container, .directory-controls { display: flex; flex-wrap: wrap; justify-content: center; margin: 30px 0; }
 button, .filter-btn, .toggle-btn, .day-nav-btn { background: white; border: 2px solid #222; padding: 12px 24px; border-radius: 0; cursor: pointer; color: #222; font-weight: 900; text-transform: uppercase; font-size: 0.9rem; margin: -1px; }
 button.active, .filter-btn.active, .toggle-btn.active { background: var(--savor-blue) !important; color: white !important; border-color: #222 !important; }
 .day-nav-btn { background: #333; color: white; flex: 1; }
+
 .deal-card, .directory-card { background: white; border: 3px solid var(--savor-gold); padding: 30px; margin-bottom: 30px; }
-.section-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--savor-blue); border-bottom: 3px solid var(--savor-blue); padding-bottom: 10px; margin-bottom: 30px; text-transform: uppercase; }
+.section-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--savor-blue); border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 30px; text-transform: uppercase; }
 .day-header { display: inline-block; background: #000; color: white; padding: 10px 30px; text-transform: uppercase; font-weight: 900; margin-bottom: 20px; }
+
 .map-link { text-decoration: none; color: var(--savor-blue); font-weight: 900; font-size: 1.8rem; }
-.map-link:hover { text-decoration: underline; }
+.map-link-dir { text-decoration: none; color: var(--savor-blue); font-weight: 900; font-size: 1.4rem; }
+.map-link:hover, .map-link-dir:hover { text-decoration: underline; }
+
+.card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+.time-badge { background: #eee; padding: 8px 15px; font-weight: 800; color: #444; font-size: 0.9rem; }
+.share-btn { border: 1px solid var(--savor-gold); color: var(--savor-gold); font-size: 0.75rem; padding: 6px 14px; background: white; cursor: pointer; text-transform: uppercase; font-weight: 800; }
+
 .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; }
 .tag-badge { background: #000; color: var(--savor-gold); padding: 6px 15px; border-radius: 50px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; }
 .search-container input { width: 100%; padding: 15px; border: 2px solid #222; font-size: 1.1rem; box-sizing: border-box; }
-.card-time { font-weight: 900; color: var(--savor-blue); margin-top: 15px; display: block; }
-
-    
