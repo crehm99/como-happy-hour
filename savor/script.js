@@ -7,12 +7,6 @@ async function loadDeals() {
         const response = await fetch('../deals.json?v=' + new Date().getTime());
         const data = await response.json();
         deals = data.deals; 
-        const urlParams = new URLSearchParams(window.location.search);
-        const sharedBar = urlParams.get('bar');
-        if (sharedBar) {
-            const searchInput = document.getElementById('directory-search');
-            if (searchInput) searchInput.value = sharedBar;
-        }
         const footerDate = document.getElementById('update-date');
         if (footerDate) footerDate.innerText = `Deals last verified: ${data.lastUpdated}`;
         updateApp();
@@ -46,7 +40,6 @@ function updateApp() {
     const timeDisplay = document.getElementById('current-time');
     const searchInput = document.getElementById('directory-search');
     
-    // TIMEZONE LOGIC
     const now = new Date();
     const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour12: false, weekday: 'long', hour: 'numeric', minute: 'numeric' });
     const parts = formatter.formatToParts(now);
@@ -70,7 +63,6 @@ function updateApp() {
         return matchesSearch && matchesTag;
     });
 
-    // ACTIVE NOW
     const activeDeals = filteredDeals.filter(item => {
         if (!item.days.includes(currentDay)) return false;
         const s = item.start;
@@ -81,29 +73,27 @@ function updateApp() {
     if (listContainer) {
         listContainer.innerHTML = activeDeals.map(item => `
             <div class="deal-card">
-                <h2 style="font-family:'Playfair Display', serif; color:var(--savor-blue);">${item.name}</h2>
+                <h2 style="font-family:'Playfair Display', serif; color:var(--savor-blue); margin:0 0 10px 0;">${item.name}</h2>
                 <p>${item.deal}</p>
                 ${getTagsHTML(item.tags)}
-                <div style="margin-top:15px; font-weight:bold; color:var(--savor-blue);">Until ${formatTime(item.end)}</div>
+                <span class="card-time">UNTIL ${formatTime(item.end)}</span>
             </div>
         `).join('');
     }
 
-    // LATER TODAY
     const laterTodayDeals = filteredDeals.filter(item => item.days.includes(currentDay) && item.start > currentHourDecimal);
     laterTodayDeals.sort((a, b) => a.start - b.start);
     if (upcomingContainer) {
         upcomingContainer.innerHTML = laterTodayDeals.length > 0 ? `<h2 class="section-title">Later Today</h2>` + laterTodayDeals.map(item => `
             <div class="deal-card">
-                <h2 style="font-family:'Playfair Display', serif; color:var(--savor-blue);">${item.name}</h2>
+                <h2 style="font-family:'Playfair Display', serif; color:var(--savor-blue); margin:0 0 10px 0;">${item.name}</h2>
                 <p>${item.deal}</p>
                 ${getTagsHTML(item.tags)}
-                <div style="margin-top:15px; font-weight:bold; color:#666;">Starts ${formatTime(item.start)}</div>
+                <span class="card-time">STARTS ${formatTime(item.start)}</span>
             </div>
         `).join('') : "";
     }
 
-    // DIRECTORY
     if (directoryContainer) {
         let directoryHTML = "";
         if (currentView === 'day') {
@@ -111,17 +101,17 @@ function updateApp() {
                 const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
                 dealsForDay.sort((a, b) => a.start - b.start);
                 if (dealsForDay.length > 0) {
-                    directoryHTML += `<h3 class="day-header" id="header-${dayNames[dayIndex]}">${dayNames[dayIndex]}</h3>`;
+                    directoryHTML += `<div class="day-header" id="header-${dayNames[dayIndex]}">${dayNames[dayIndex]}</div>`;
                     directoryHTML += dealsForDay.map(item => `
                         <div class="directory-card">
-                            <div style="flex: 1;"><div style="font-weight:bold; color:var(--savor-blue);">${item.name}</div><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div>
-                            <div style="font-weight:bold; color:#666;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
+                            <div style="flex: 1;"><div style="font-weight:900; color:var(--savor-blue); font-size:1.3rem; margin-bottom:5px;">${item.name}</div><div>${item.deal}</div>${getTagsHTML(item.tags)}</div>
+                            <div style="font-weight:800; color:#444; min-width:160px; text-align:right;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
                         </div>`).join('');
                 }
             });
         } else {
             [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
-                directoryHTML += `<div class="directory-card"><div style="flex: 1;"><div style="font-weight:bold; color:var(--savor-blue);">${item.name}</div><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:bold; color:#666;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
+                directoryHTML += `<div class="directory-card"><div style="flex: 1;"><div style="font-weight:900; color:var(--savor-blue); font-size:1.3rem;">${item.name}</div><div>${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:800; color:#444;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
             });
         }
         directoryContainer.innerHTML = directoryHTML;
@@ -134,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dayBtn = document.getElementById('view-by-day');
     const barBtn = document.getElementById('view-by-bar');
     if (dayBtn && barBtn) {
-        dayBtn.addEventListener('click', () => { currentView = 'day'; dayBtn.classList.add('active'); barBtn.classList.remove('active'); document.getElementById('day-nav-container').style.display='none'; updateApp(); });
+        dayBtn.addEventListener('click', () => { currentView = 'day'; dayBtn.classList.add('active'); barBtn.classList.remove('active'); document.getElementById('day-nav-container').style.display='flex'; updateApp(); });
         barBtn.addEventListener('click', () => { currentView = 'bar'; barBtn.classList.add('active'); dayBtn.classList.remove('active'); document.getElementById('day-nav-container').style.display='none'; updateApp(); });
     }
     tagBtns.forEach(btn => { btn.addEventListener('click', () => { tagBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentTag = btn.dataset.tag; updateApp(); }); });
