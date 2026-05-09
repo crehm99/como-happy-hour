@@ -9,57 +9,46 @@
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <h1>Savor Happy Hour</h1>
-            <p id="current-time">Loading Columbia time...</p>
-        </div>
+        <h1>Savor Happy Hour</h1>
+        <p id="current-time">Loading...</p>
     </header>
 
     <main>
-        <section id="active-now">
-            <h2 class="section-title">Active Now</h2>
-            <div id="happy-hour-list"></div>
-        </section>
-
-        <section id="upcoming">
-            <div id="upcoming-list"></div>
-        </section>
-
-        <section id="directory">
-            <h2 class="section-title">Weekly Directory</h2>
-            
-<div class="tag-filters">
-    <button class="filter-btn active" data-tag="all">All</button>
-    <button class="filter-btn" data-tag="food">Food</button>
-    <button class="filter-btn" data-tag="beer">Beer</button>
-    <button class="filter-btn" data-tag="wine">Wine</button>
-    <button class="filter-btn" data-tag="cocktails">Cocktails</button>
-    <button class="filter-btn" data-tag="patio">Patio</button>
-</div>
-                
-                <div id="day-nav-container">
-                    <button class="day-nav-btn" onclick="scrollToDay('Monday')">Mon</button>
-                    <button class="day-nav-btn" onclick="scrollToDay('Tuesday')">Tue</button>
-                    <button class="day-nav-btn" onclick="scrollToDay('Wednesday')">Wed</button>
-                    <button class="day-nav-btn" onclick="scrollToDay('Thursday')">Thu</button>
-                    <button class="day-nav-btn" onclick="scrollToDay('Friday')">Fri</button>
-                    <button class="day-nav-btn" onclick="scrollToDay('Saturday')">Sat</button>
-                    <button class="day-nav-btn" onclick="scrollToDay('Sunday')">Sun</button>
-                </div>
-
-                <div class="view-toggle">
-                    <button id="view-by-day" class="active">View by Day</button>
-                    <button id="view-by-bar">View by Name</button>
-                </div>
+        <div id="controls-container">
+            <input type="text" id="directory-search" placeholder="Search bars or restaurants...">
+            <div class="tag-filters">
+                <button class="filter-btn active" data-tag="all">All</button>
+                <button class="filter-btn" data-tag="food">Food</button>
+                <button class="filter-btn" data-tag="wine">Wine</button>
+                <button class="filter-btn" data-tag="cocktails">Cocktails</button>
+                <button class="filter-btn" data-tag="beer">Beer</button>
+                <button class="filter-btn" data-tag="patio">Patio</button>
             </div>
+        </div>
 
-            <div id="full-directory"></div>
-        </section>
+        <div id="day-nav-container">
+            <button class="day-nav-btn" onclick="scrollToDay('Monday')">Mon</button>
+            <button class="day-nav-btn" onclick="scrollToDay('Tuesday')">Tue</button>
+            <button class="day-nav-btn" onclick="scrollToDay('Wednesday')">Wed</button>
+            <button class="day-nav-btn" onclick="scrollToDay('Thursday')">Thu</button>
+            <button class="day-nav-btn" onclick="scrollToDay('Friday')">Fri</button>
+            <button class="day-nav-btn" onclick="scrollToDay('Saturday')">Sat</button>
+            <button class="day-nav-btn" onclick="scrollToDay('Sunday')">Sun</button>
+        </div>
+
+        <div id="happy-hour-list"></div>
+        <div id="upcoming-list"></div>
+
+        <div class="view-toggle">
+            <button id="view-by-day" class="active">By Day</button>
+            <button id="view-by-bar">By Name</button>
+        </div>
+        <div id="full-directory"></div>
     </main>
 
     <footer>
-        <p id="update-date">Deals last verified: --</p>
-        <p class="disclaimer">Note: Deals are subject to change and not guaranteed.</p>
+        <p id="update-date"></p>
+        <p class="disclaimer">Deals not guaranteed. Verify with venue.</p>
     </footer>
 
     <script src="script.js"></script>
