@@ -10,7 +10,6 @@ async function loadDeals() {
         const data = await response.json();
         deals = data.deals; 
 
-        // Check for Shared Links
         const urlParams = new URLSearchParams(window.location.search);
         const sharedBar = urlParams.get('bar');
         if (sharedBar) {
@@ -28,7 +27,7 @@ async function loadDeals() {
     }
 }
 
-// --- 2. HELPERS: TIME, SCROLLING, & SHARING ---
+// --- 2. HELPERS ---
 function formatTime(val) {
     let hour = Math.floor(val);
     let minutes = (val % 1) === 0.5 ? "30" : "00";
@@ -61,6 +60,12 @@ async function shareDeal(name, deal) {
     }
 }
 
+// RESTORED: Tag Rendering Logic
+function getTagsHTML(tags) {
+    if (!tags || !Array.isArray(tags)) return '';
+    return `<div class="tag-container" style="margin-top: 8px;">${tags.map(tag => `<span class="tag-badge">${tag}</span>`).join('')}</div>`;
+}
+
 // --- 3. THE CORE ENGINE ---
 function updateApp() {
     const listContainer = document.getElementById('happy-hour-list');
@@ -69,7 +74,7 @@ function updateApp() {
     const timeDisplay = document.getElementById('current-time');
     const searchInput = document.getElementById('directory-search');
     
-    // --- BULLETPROOF COLUMBIA TIME LOGIC ---
+    // --- COLUMBIA TIMEZONE LOGIC ---
     const now = new Date();
     const formatter = new Intl.DateTimeFormat('en-US', {
         timeZone: 'America/Chicago',
@@ -78,7 +83,6 @@ function updateApp() {
         hour: 'numeric',
         minute: 'numeric'
     });
-
     const parts = formatter.formatToParts(now);
     const getPart = (type) => parts.find(p => p.type === type).value;
 
@@ -92,10 +96,7 @@ function updateApp() {
 
     if (timeDisplay) {
         const displayTime = new Intl.DateTimeFormat('en-US', {
-            timeZone: 'America/Chicago',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
+            timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hour12: true
         }).format(now);
         timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${columbiaDayName} at ${displayTime}`;
     }
@@ -107,13 +108,12 @@ function updateApp() {
         return matchesSearch && matchesTag;
     });
 
-    // --- SECTIONS: ACTIVE NOW ---
+    // --- SECTION 1: ACTIVE NOW ---
     const activeDeals = filteredDeals.filter(item => {
         if (!item.days.includes(currentDay)) return false;
         const s = item.start;
         const e = item.end === 0 ? 24 : item.end;
-        const nowTime = currentHourDecimal;
-        return (e > s) ? (nowTime >= s && nowTime < e) : (nowTime >= s || nowTime < e);
+        return (e > s) ? (currentHourDecimal >= s && currentHourDecimal < e) : (currentHourDecimal >= s || currentHourDecimal < e);
     });
 
     if (listContainer) {
@@ -122,8 +122,9 @@ function updateApp() {
                 <div>
                     <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
                     <p style="margin: 10px 0;">${item.deal}</p>
+                    ${getTagsHTML(item.tags)}
                 </div>
-                <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top:15px;">
                     <span class="time-badge">Until ${formatTime(item.end)}</span>
                     <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
                 </div>
@@ -131,7 +132,7 @@ function updateApp() {
         `).join('') : `<p style="text-align:center; color:#888; padding: 20px;">No matching deals active now.</p>`;
     }
 
-    // --- SECTIONS: LATER TODAY ---
+    // --- SECTION 2: LATER TODAY ---
     const laterTodayDeals = filteredDeals.filter(item => 
         item.days.includes(currentDay) && item.start > currentHourDecimal
     );
@@ -145,9 +146,10 @@ function updateApp() {
                     <div>
                         <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
                         <p style="margin: 10px 0;">${item.deal}</p>
+                        ${getTagsHTML(item.tags)}
                     </div>
-                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="time-badge" style="background: #666;">${formatTime(item.start)} - ${formatTime(item.end)}</span>
+                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top:15px;">
+                        <span class="time-badge" style="background: #666;">Starts ${formatTime(item.start)}</span>
                         <button class="share-btn" data-name="${item.name}" data-deal="${item.deal}">Share ↗</button>
                     </div>
                 </div>
@@ -155,55 +157,81 @@ function updateApp() {
         ` : "";
     }
 
-    // --- SECTIONS: WEEKLY DIRECTORY ---
+    // --- SECTION 3: WEEKLY DIRECTORY ---
     if (directoryContainer) {
-        let directoryHTML = "";
-        const displayOrder = [1, 2, 3, 4, 5, 6, 0]; 
-        displayOrder.forEach((dayIndex) => {
-            const dayName = dayNames[dayIndex];
-            const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
-            dealsForDay.sort((a, b) => a.start - b.start);
-            if (dealsForDay.length > 0) {
-                directoryHTML += `<h3 class="day-header" id="header-${dayName}">${dayName}</h3>`;
-                directoryHTML += dealsForDay.map(item => `
+        let directoryHTML = `<h2 class="section-title">Weekly Directory</h2>`;
+        if (currentView === 'day') {
+            const displayOrder = [1, 2, 3, 4, 5, 6, 0];
+            displayOrder.forEach((dayIndex) => {
+                const dayName = dayNames[dayIndex];
+                const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
+                dealsForDay.sort((a, b) => a.start - b.start);
+                if (dealsForDay.length > 0) {
+                    directoryHTML += `<h3 class="day-header" id="header-${dayName}">${dayName}</h3>`;
+                    directoryHTML += dealsForDay.map(item => `
+                        <div class="directory-card">
+                            <div style="flex: 1;">
+                                <div class="directory-name">${item.name}</div>
+                                <div class="directory-details" style="margin: 5px 0;">${item.deal}</div>
+                                ${getTagsHTML(item.tags)}
+                            </div>
+                            <div class="directory-time" style="font-weight: bold; color: #666; min-width: 150px; text-align: right;">
+                                ${formatTime(item.start)} - ${formatTime(item.end)}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            });
+        } else {
+            const sortedBars = [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name));
+            directoryHTML += sortedBars.map(item => {
+                const daysLabel = item.days.map(d => dayNames[d].substring(0, 3)).join(', ');
+                return `
                     <div class="directory-card">
                         <div style="flex: 1;">
                             <div class="directory-name">${item.name}</div>
                             <div class="directory-details" style="margin: 5px 0;">${item.deal}</div>
+                            ${getTagsHTML(item.tags)}
+                            <div style="font-size:0.8rem; color:#888; margin-top:5px;">Available: ${daysLabel}</div>
                         </div>
                         <div class="directory-time" style="font-weight: bold; color: #666; min-width: 150px; text-align: right;">
                             ${formatTime(item.start)} - ${formatTime(item.end)}
                         </div>
                     </div>
-                `).join('');
-            }
-        });
+                `;
+            }).join('');
+        }
         directoryContainer.innerHTML = directoryHTML;
     }
 }
 
-// --- 4. INTERACTIVE LISTENERS ---
+// --- 4. LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
+    const dayBtn = document.getElementById('view-by-day');
+    const barBtn = document.getElementById('view-by-bar');
     const searchInput = document.getElementById('directory-search');
     const tagBtns = document.querySelectorAll('.filter-btn');
 
     document.addEventListener('click', (e) => {
-        if (e.target && e.target.classList.contains('share-btn')) {
-            const name = e.target.getAttribute('data-name');
-            const deal = e.target.getAttribute('data-deal');
-            shareDeal(name, deal);
+        if (e.target.classList.contains('share-btn')) {
+            shareDeal(e.target.dataset.name, e.target.dataset.deal);
         }
     });
+
+    if (dayBtn && barBtn) {
+        dayBtn.addEventListener('click', () => { currentView = 'day'; dayBtn.classList.add('active'); barBtn.classList.remove('active'); updateApp(); });
+        barBtn.addEventListener('click', () => { currentView = 'bar'; barBtn.classList.add('active'); dayBtn.classList.remove('active'); updateApp(); });
+    }
 
     tagBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             tagBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            currentTag = btn.getAttribute('data-tag');
+            currentTag = btn.dataset.tag;
             updateApp();
         });
     });
 
-    if (searchInput) { searchInput.addEventListener('input', () => { updateApp(); }); }
+    if (searchInput) searchInput.addEventListener('input', updateApp);
     loadDeals();
 });
