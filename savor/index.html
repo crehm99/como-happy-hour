@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Savor Columbia | Happy Hour Directory</title>
-    <!-- Savor Magazine Fonts -->
+    <title>Savor Columbia | Happy Hour</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -17,25 +16,6 @@
     </header>
 
     <main>
-        <div id="filter-controls">
-            <input type="text" id="directory-search" placeholder="Search bars or restaurants...">
-            <div class="tag-filters">
-                <button class="filter-btn active" data-tag="all">All</button>
-                <button class="filter-btn" data-tag="food">Food</button>
-                <button class="filter-btn" data-tag="drinks">Drinks</button>
-            </div>
-        </div>
-
-        <div id="day-nav-container">
-            <button class="day-nav-btn" onclick="scrollToDay('Monday')">Mon</button>
-            <button class="day-nav-btn" onclick="scrollToDay('Tuesday')">Tue</button>
-            <button class="day-nav-btn" onclick="scrollToDay('Wednesday')">Wed</button>
-            <button class="day-nav-btn" onclick="scrollToDay('Thursday')">Thu</button>
-            <button class="day-nav-btn" onclick="scrollToDay('Friday')">Fri</button>
-            <button class="day-nav-btn" onclick="scrollToDay('Saturday')">Sat</button>
-            <button class="day-nav-btn" onclick="scrollToDay('Sunday')">Sun</button>
-        </div>
-
         <section id="active-now">
             <h2 class="section-title">Active Now</h2>
             <div id="happy-hour-list"></div>
@@ -46,17 +26,39 @@
         </section>
 
         <section id="directory">
-            <div class="view-toggle">
-                <button id="view-by-day" class="active">View by Day</button>
-                <button id="view-by-bar">View by Name</button>
+            <h2 class="section-title">Weekly Directory</h2>
+            
+            <div id="filter-controls">
+                <input type="text" id="directory-search" placeholder="Search bars or restaurants...">
+                <div class="tag-filters">
+                    <button class="filter-btn active" data-tag="all">All</button>
+                    <button class="filter-btn" data-tag="food">Food</button>
+                    <button class="filter-btn" data-tag="drinks">Drinks</button>
+                </div>
+                
+                <div id="day-nav-container">
+                    <button class="day-nav-btn" onclick="scrollToDay('Monday')">Mon</button>
+                    <button class="day-nav-btn" onclick="scrollToDay('Tuesday')">Tue</button>
+                    <button class="day-nav-btn" onclick="scrollToDay('Wednesday')">Wed</button>
+                    <button class="day-nav-btn" onclick="scrollToDay('Thursday')">Thu</button>
+                    <button class="day-nav-btn" onclick="scrollToDay('Friday')">Fri</button>
+                    <button class="day-nav-btn" onclick="scrollToDay('Saturday')">Sat</button>
+                    <button class="day-nav-btn" onclick="scrollToDay('Sunday')">Sun</button>
+                </div>
+
+                <div class="view-toggle">
+                    <button id="view-by-day" class="active">View by Day</button>
+                    <button id="view-by-bar">View by Name</button>
+                </div>
             </div>
+
             <div id="full-directory"></div>
         </section>
     </main>
 
     <footer>
         <p id="update-date">Deals last verified: --</p>
-        <p class="disclaimer">Note: Deals are subject to change and are not guaranteed. Please verify with the venue upon arrival.</p>
+        <p class="disclaimer">Note: Deals are subject to change and not guaranteed.</p>
     </footer>
 
     <script src="script.js"></script>
