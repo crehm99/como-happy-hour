@@ -14,10 +14,9 @@ async function loadDeals() {
 function formatTime(val) {
     let hour = Math.floor(val);
     let minutes = (val % 1) === 0.5 ? "30" : "00";
-    let ampm = "AM";
-    if (hour === 0 || hour === 24) { hour = 12; ampm = "AM"; }
-    else if (hour === 12) { ampm = "PM"; }
-    else if (hour > 12) { hour = hour - 12; ampm = "PM"; }
+    let ampm = hour >= 12 ? "PM" : "AM";
+    if (hour === 0 || hour === 24) hour = 12;
+    else if (hour > 12) hour -= 12;
     return `${hour}:${minutes} ${ampm}`;
 }
 
@@ -42,50 +41,49 @@ function updateApp() {
     const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour12: false, weekday: 'long', hour: 'numeric', minute: 'numeric' });
     const parts = formatter.formatToParts(now);
     const getPart = (type) => parts.find(p => p.type === type).value;
-    const columbiaHour = parseInt(getPart('hour'));
-    const columbiaMinute = parseInt(getPart('minute'));
-    const columbiaDayName = getPart('weekday'); 
+    const colHour = parseInt(getPart('hour'));
+    const colMin = parseInt(getPart('minute'));
+    const colDay = getPart('weekday'); 
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const currentDay = dayNames.indexOf(columbiaDayName);
-    const currentHourDecimal = columbiaHour + (columbiaMinute >= 30 ? 0.5 : 0);
+    const currentDay = dayNames.indexOf(colDay);
+    const decimalNow = colHour + (colMin >= 30 ? 0.5 : 0);
 
     if (timeDisplay) {
         const displayTime = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: '2-digit', minute: '2-digit', hour12: true }).format(now);
-        timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${columbiaDayName} at ${displayTime}`;
+        timeDisplay.innerText = `It's 5 o'clock somewhere, but in Columbia it's ${colDay} at ${displayTime}`;
     }
 
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
-    const filteredDeals = deals.filter(item => {
+    const filtered = deals.filter(item => {
         const matchesSearch = item.name.toLowerCase().includes(searchTerm);
         const matchesTag = currentTag === 'all' || (item.tags && item.tags.includes(currentTag));
         return matchesSearch && matchesTag;
     });
 
-    const activeDeals = filteredDeals.filter(item => {
+    const active = filtered.filter(item => {
         if (!item.days.includes(currentDay)) return false;
-        const s = item.start;
-        const e = item.end === 0 ? 24 : item.end;
-        return (e > s) ? (currentHourDecimal >= s && currentHourDecimal < e) : (currentHourDecimal >= s || currentHourDecimal < e);
+        const s = item.start, e = item.end === 0 ? 24 : item.end;
+        return (e > s) ? (decimalNow >= s && decimalNow < e) : (decimalNow >= s || decimalNow < e);
     });
 
     if (listContainer) {
-        listContainer.innerHTML = activeDeals.length > 0 ? `<h2 class="section-title">Happening Now</h2>` + activeDeals.map(item => `
+        listContainer.innerHTML = active.length > 0 ? `<h2 class="section-title">Happening Now</h2>` + active.map(item => `
             <div class="deal-card">
-                <h2 style="margin:0 0 10px 0; font-weight:900; font-size:1.8rem;">${item.name}</h2>
-                <p style="font-size:1.1rem; line-height:1.4;">${item.deal}</p>
+                <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
+                <p>${item.deal}</p>
                 ${getTagsHTML(item.tags)}
                 <span class="card-time">UNTIL ${formatTime(item.end)}</span>
             </div>
         `).join('') : "";
     }
 
-    const laterTodayDeals = filteredDeals.filter(item => item.days.includes(currentDay) && item.start > currentHourDecimal);
-    laterTodayDeals.sort((a, b) => a.start - b.start);
+    const upcoming = filtered.filter(item => item.days.includes(currentDay) && item.start > decimalNow);
+    upcoming.sort((a, b) => a.start - b.start);
     if (upcomingContainer) {
-        upcomingContainer.innerHTML = laterTodayDeals.length > 0 ? `<h2 class="section-title">Later Today</h2>` + laterTodayDeals.map(item => `
+        upcomingContainer.innerHTML = upcoming.length > 0 ? `<h2 class="section-title">Later Today</h2>` + upcoming.map(item => `
             <div class="deal-card">
-                <h2 style="margin:0 0 10px 0; font-weight:900; font-size:1.8rem;">${item.name}</h2>
-                <p style="font-size:1.1rem; line-height:1.4;">${item.deal}</p>
+                <h2><a href="${item.mapLink}" target="_blank" class="map-link">${item.name}</a></h2>
+                <p>${item.deal}</p>
                 ${getTagsHTML(item.tags)}
                 <span class="card-time">STARTS ${formatTime(item.start)}</span>
             </div>
@@ -93,26 +91,25 @@ function updateApp() {
     }
 
     if (directoryContainer) {
-        let directoryHTML = `<h2 class="section-title">Weekly Directory</h2>`;
+        let html = `<h2 class="section-title">Weekly Directory</h2>`;
         if (currentView === 'day') {
-            [1, 2, 3, 4, 5, 6, 0].forEach((dayIndex) => {
-                const dealsForDay = filteredDeals.filter(item => item.days.includes(dayIndex));
-                dealsForDay.sort((a, b) => a.start - b.start);
-                if (dealsForDay.length > 0) {
-                    directoryHTML += `<div class="day-header" id="header-${dayNames[dayIndex]}">${dayNames[dayIndex]}</div>`;
-                    directoryHTML += dealsForDay.map(item => `
+            [1, 2, 3, 4, 5, 6, 0].forEach(dIdx => {
+                const dayDeals = filtered.filter(item => item.days.includes(dIdx)).sort((a,b) => a.start - b.start);
+                if (dayDeals.length > 0) {
+                    html += `<div class="day-header" id="header-${dayNames[dIdx]}">${dayNames[dIdx]}</div>`;
+                    html += dayDeals.map(item => `
                         <div class="directory-card">
-                            <div style="flex: 1;"><div style="font-weight:900; color:var(--savor-blue); font-size:1.4rem; margin-bottom:5px;">${item.name}</div><div style="font-size:1.1rem;">${item.deal}</div>${getTagsHTML(item.tags)}</div>
-                            <div style="font-weight:900; color:#444; min-width:160px; text-align:right; font-size:1.1rem;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
+                            <div style="flex:1;"><a href="${item.mapLink}" target="_blank" class="map-link" style="font-size:1.4rem;">${item.name}</a><div style="margin:5px 0;">${item.deal}</div>${getTagsHTML(item.tags)}</div>
+                            <div style="font-weight:900; color:#444;">${formatTime(item.start)} - ${formatTime(item.end)}</div>
                         </div>`).join('');
                 }
             });
         } else {
-            [...filteredDeals].sort((a, b) => a.name.localeCompare(b.name)).forEach(item => {
-                directoryHTML += `<div class="directory-card"><div style="flex: 1;"><div style="font-weight:900; color:var(--savor-blue); font-size:1.4rem;">${item.name}</div><div>${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:900; color:#444;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
+            [...filtered].sort((a,b) => a.name.localeCompare(b.name)).forEach(item => {
+                html += `<div class="directory-card"><div style="flex:1;"><a href="${item.mapLink}" target="_blank" class="map-link" style="font-size:1.4rem;">${item.name}</a><div>${item.deal}</div>${getTagsHTML(item.tags)}</div><div style="font-weight:900;">${formatTime(item.start)} - ${formatTime(item.end)}</div></div>`;
             });
         }
-        directoryContainer.innerHTML = directoryHTML;
+        directoryContainer.innerHTML = html;
     }
 }
 
