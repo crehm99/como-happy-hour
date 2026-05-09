@@ -153,6 +153,13 @@ button.active {
     font-weight: 600;
 }
 
+/* Specific badge for "Later Today" items */
+.time-badge.upcoming {
+    background-color: #e9ecef !important; /* Soft light grey */
+    color: var(--savor-blue) !important;   /* Brand blue text */
+    border: 1px solid #dee2e6;
+}
+
 /* --- FOOTER --- */
 .card-footer {
     display: flex;
@@ -160,3 +167,5 @@ button.active {
     align-items: center;
     margin-top: 20px;
     padding
+
+    
