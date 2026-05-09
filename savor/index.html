@@ -3,29 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Savor Happy Hour</title>
+    <title>Savor Columbia | Happy Hour Finder</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="../favicon.png">
 </head>
 <body>
+
     <header>
         <h1>Savor Happy Hour</h1>
-        <p id="current-time">Loading Columbia time...</p>
+        <p id="current-time">Detecting time...</p>
     </header>
 
     <main>
-        <div id="controls-container">
-            <input type="text" id="directory-search" placeholder="Search bars or restaurants...">
-            <div class="tag-filters">
-                <button class="filter-btn active" data-tag="all">All</button>
-                <button class="filter-btn" data-tag="food">Food</button>
-                <button class="filter-btn" data-tag="wine">Wine</button>
-                <button class="filter-btn" data-tag="cocktails">Cocktails</button>
-                <button class="filter-btn" data-tag="beer">Beer</button>
-                <button class="filter-btn" data-tag="patio">Patio</button>
-            </div>
+        <section id="active-section">
+            <h2 class="section-title">Happening Now</h2>
+            <div id="happy-hour-list"></div>
+        </section>
+
+        <section id="upcoming-section">
+            <div id="upcoming-list"></div>
+        </section>
+
+        <div class="filter-container">
+            <button class="filter-btn active" data-tag="all">All</button>
+            <button class="filter-btn" data-tag="beer">Beer</button>
+            <button class="filter-btn" data-tag="wine">Wine</button>
+            <button class="filter-btn" data-tag="cocktails">Cocktails</button>
+            <button class="filter-btn" data-tag="food">Food</button>
+            <button class="filter-btn" data-tag="patio">Patio</button>
+        </div>
+
+        <section id="directory-section">
+            <h2 class="section-title">Weekly Directory</h2>
             
-            <div id="day-nav-container">
+            <div class="search-container">
+                <input type="text" id="directory-search" placeholder="Search by establishment name (e.g. Irene's)...">
+            </div>
+
+            <div class="directory-controls">
+                <button id="view-by-day" class="toggle-btn active">By Day</button>
+                <button id="view-by-bar" class="toggle-btn">By Establishment (A-Z)</button>
+            </div>
+
+            <div id="day-nav-container" class="filter-container" style="display: none;">
                 <button class="day-nav-btn" onclick="scrollToDay('Monday')">Mon</button>
                 <button class="day-nav-btn" onclick="scrollToDay('Tuesday')">Tue</button>
                 <button class="day-nav-btn" onclick="scrollToDay('Wednesday')">Wed</button>
@@ -34,21 +55,14 @@
                 <button class="day-nav-btn" onclick="scrollToDay('Saturday')">Sat</button>
                 <button class="day-nav-btn" onclick="scrollToDay('Sunday')">Sun</button>
             </div>
-        </div>
 
-        <div id="happy-hour-list"></div>
-        <div id="upcoming-list"></div>
-
-        <div class="view-toggle">
-            <button id="view-by-day" class="active">By Day</button>
-            <button id="view-by-bar">By Name</button>
-        </div>
-        <div id="full-directory"></div>
+            <div id="full-directory"></div>
+        </section>
     </main>
 
     <footer>
-        <p id="update-date"></p>
-        <p class="disclaimer">Deals not guaranteed. Verify with venue.</p>
+        <p id="update-date">Deals last verified: --</p>
+        <p class="disclaimer">Note: Deals are subject to change and are not guaranteed. Please verify with the venue upon arrival.</p>
     </footer>
 
     <script src="script.js"></script>
