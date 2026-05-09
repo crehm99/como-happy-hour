@@ -11,7 +11,6 @@ body {
     color: var(--savor-text);
     font-family: 'Inter', sans-serif;
     margin: 0;
-    padding-bottom: 50px;
 }
 
 header {
@@ -27,13 +26,27 @@ h1, h2, .day-header {
     color: var(--savor-blue);
 }
 
-main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
+main { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+/* THE TAG FIX */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* This creates the space between the words */
+    margin-top: 10px;
 }
 
-/* CARD FIXES */
+.tag-badge {
+    background: #fdf6e7;
+    color: var(--savor-gold);
+    border: 1px solid var(--savor-gold);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    text-transform: capitalize;
+}
+
+/* CARD STYLING */
 .deal-card, .directory-card {
     background: var(--savor-white);
     border: 1px solid #e0e0e0;
@@ -41,59 +54,25 @@ main {
     padding: 25px;
     margin-bottom: 20px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
-.directory-card {
-    flex-direction: row;
+.card-footer {
+    display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
 }
 
-.map-link { 
-    color: var(--savor-blue); 
-    text-decoration: none; 
-    font-size: 1.4rem;
-}
+.map-link { color: var(--savor-blue); text-decoration: none; font-weight: bold; font-size: 1.2rem; }
+.time-badge { background: var(--savor-blue); color: white; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; }
 
-.directory-name {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: var(--savor-blue);
-}
-
-/* NAVIGATION & BUTTONS */
-#day-nav-container {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 30px 0;
-    flex-wrap: wrap;
-}
-
-.day-nav-btn {
+.share-btn {
     background: white;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    padding: 8px 16px;
+    border: 1px solid var(--savor-blue);
     color: var(--savor-blue);
+    padding: 6px 12px;
+    border-radius: 4px;
     cursor: pointer;
 }
-
-button.active {
-    background: var(--savor-blue) !important;
-    color: white !important;
-}
-
-footer {
-    background: #fff;
-    border-top: 1px solid #ddd;
-    padding: 40px;
-    text-align: center;
-    margin-top: 50px;
-}
-
-footer { text-align: center; padding: 40px; background: #eee; font-size: 0.8rem; }
-.disclaimer { font-style: italic; color: #666; }
