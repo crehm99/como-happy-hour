@@ -4,7 +4,7 @@
     --savor-bg: #f8f9fa;
 }
 
-body { background: var(--savor-bg); color: #333; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+body { background: var(--savor-bg); color: #222; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
 
 header { 
     background: var(--savor-blue); 
@@ -14,71 +14,83 @@ header {
     border-bottom: 5px solid var(--savor-gold);
 }
 
-header h1 { font-family: 'Playfair Display', serif; margin: 0; font-size: 2.8rem; }
-#current-time { margin-top: 10px; opacity: 0.9; }
+header h1 { font-family: 'Playfair Display', serif; margin: 0; font-size: 2.8rem; text-transform: uppercase; }
 
-main { max-width: 800px; margin: 0 auto; padding: 20px; }
+main { max-width: 900px; margin: 0 auto; padding: 20px; }
 
-/* REPLICATING YOUR MAIN PAGE LAYOUT CLASSES */
+/* BUTTONS - Matching original shapes */
 .filter-container, .directory-controls { 
     display: flex; 
     flex-wrap: wrap; 
-    gap: 8px; 
+    gap: 10px; 
     justify-content: center; 
-    margin: 20px 0; 
+    margin: 30px 0; 
 }
 
-.search-container { margin: 20px 0; }
-#directory-search { 
-    width: 100%; 
-    padding: 14px; 
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-/* SAVOR BRANDED BUTTONS */
 button, .filter-btn, .toggle-btn, .day-nav-btn { 
     background: white; 
-    border: 1px solid #ccc; 
-    padding: 8px 14px; 
-    border-radius: 4px; 
+    border: 2px solid #222; 
+    padding: 10px 20px; 
+    border-radius: 8px; 
     cursor: pointer; 
-    color: var(--savor-blue); 
-    font-weight: 600; 
+    color: #222; 
+    font-weight: 800; 
+    text-transform: uppercase;
+    font-size: 0.85rem;
 }
 
 button.active, .filter-btn.active, .toggle-btn.active { 
     background: var(--savor-blue) !important; 
     color: white !important; 
+    border-color: var(--savor-blue) !important;
 }
 
-/* CARD STYLING */
+.day-nav-btn { background: #2d2d2d; color: white; border: none; flex: 1; min-width: 70px; }
+
+/* CARDS */
 .deal-card, .directory-card { 
     background: white; 
-    border: 1px solid #e0e0e0; 
-    padding: 25px; 
-    margin-bottom: 20px; 
-    border-radius: 4px; 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+    border: 3px solid var(--savor-gold); 
+    padding: 30px; 
+    margin-bottom: 25px; 
+    border-radius: 12px; 
 }
 
-/* TAG FIX */
-.tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.section-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--savor-blue); border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 25px; text-transform: uppercase; }
+
+.day-header { 
+    display: inline-block;
+    background: #000;
+    color: white;
+    padding: 8px 25px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+/* SEARCH */
+.search-container input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* TAGS */
+.tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; }
 .tag-badge { 
-    background: #fdf6e7; 
+    background: #2d2d2d; 
     color: var(--savor-gold); 
-    border: 1px solid var(--savor-gold); 
-    padding: 3px 10px; 
-    border-radius: 15px; 
+    padding: 5px 15px; 
+    border-radius: 20px; 
     font-size: 0.75rem; 
-    text-transform: capitalize; 
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
-.section-title { font-family: 'Playfair Display', serif; color: var(--savor-blue); margin: 40px 0 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px; font-size: 2rem; }
-.day-header { font-family: 'Playfair Display', serif; color: var(--savor-blue); margin: 30px 0 15px; font-size: 1.6rem; }
-
-footer { text-align: center; padding: 60px 20px; background: #fff; border-top: 1px solid #eee; }
+.card-time { font-weight: 800; color: var(--savor-blue); margin-top: 15px; display: block; }
 
     
